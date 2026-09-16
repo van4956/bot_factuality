@@ -13,7 +13,7 @@ from aiogram.utils.i18n import I18n
 from redis.asyncio.client import Redis
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
-from common.comands import private
+from common.comands import PRIVATE_COMMANDS
 from config_data.config import Config, load_config
 from database.models import Base
 from handlers import (
@@ -115,11 +115,11 @@ session_maker = async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_c
 
 
 # Подключаем мидлвари
+i18n = I18n(path="locales", default_locale="ru", domain="bot_06_factuality")
 dp.update.outer_middleware(throttle.ThrottleMiddleware())  # тротлинг чрезмерно частых действий пользователей
 dp.update.outer_middleware(db.DataBaseSession(session_pool=session_maker))  # мидлварь для прокидывания сессии БД
 dp.update.outer_middleware(locale.LocaleFromDBMiddleware())  # определяем локаль из БД и передам ее в FSMContext
-dp.update.outer_middleware(screen.CurrentScreenMiddleware())
-i18n = I18n(path="locales", default_locale="ru", domain="bot_06_factuality")  # создаем объект I18n
+dp.update.outer_middleware(screen.CurrentScreenMiddleware(i18n=i18n))
 dp.update.middleware(locale.CachedLocaleMiddleware(i18n=i18n))
 
 # dp.update.middleware(ConstI18nMiddleware(locale='ru', i18n=i18n))  # задаем локаль как принудительно устанавливаемую константу
@@ -193,11 +193,18 @@ async def main() -> None:
     # Пропускаем накопившиеся апдейты - удаляем вебхуки (то что бот получил пока спал)
     await bot.delete_webhook(drop_pending_updates=False)
 
-    # Удаляем ранее установленные команды для бота во всех личных чатах
-    await bot.delete_my_commands(scope=types.BotCommandScopeAllPrivateChats())
-
-    # Добавляем свои команды
-    await bot.set_my_commands(commands=private, scope=types.BotCommandScopeAllPrivateChats())
+    commands_scope = types.BotCommandScopeAllPrivateChats()
+    await bot.delete_my_commands(scope=commands_scope)
+    await bot.set_my_commands(
+        commands=PRIVATE_COMMANDS["ru"],
+        scope=commands_scope,
+    )
+    for language_code, commands in PRIVATE_COMMANDS.items():
+        await bot.set_my_commands(
+            commands=commands,
+            scope=commands_scope,
+            language_code=language_code,
+        )
 
 
     # Запускаем polling

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot_06_factuality 0.1\n"
 "Report-Msgid-Bugs-To: gontscharowiwan@yandex.ru\n"
-"POT-Creation-Date: 2025-11-17 15:47+0400\n"
+"POT-Creation-Date: 2026-09-16 09:43+0000\n"
 "PO-Revision-Date: 2024-12-15 17:23+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -19,7 +19,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
 
-#: handlers/correct_answer.py:153
+#: common/keyboard.py:59
+msgid "Пройти тест"
+msgstr "Take the test"
+
+#: common/keyboard.py:65
+msgid "Продолжить тест"
+msgstr "Continue the test"
+
+#: handlers/correct_answer.py:149
 msgid ""
 "Вопрос: 1\n"
 "\n"
@@ -44,7 +52,8 @@ msgid ""
 msgstr ""
 "Question: 1\n"
 "\n"
-"What percentage of girls today finish primary school in low-income countries?\n"
+"What percentage of girls today finish primary school in low-income "
+"countries?\n"
 "\n"
 "1) 20 percent\n"
 "2) 40 percent\n"
@@ -53,11 +62,16 @@ msgstr ""
 "Correct answer: 60 percent\n"
 "Your answer: {user_answer}\n"
 "\n"
-"<i>Explanation: Many believe that girls' access to education in poor countries is limited, but this is no longer the case. Over the past decades, global initiatives such as UN and WHO programs have significantly increased access to education, especially for girls. Today, the majority of girls in low-income countries finish primary school, which reflects tremendous improvements in education.\n"
+"<i>Explanation: Many believe that girls' access to education in poor "
+"countries is limited, but this is no longer the case. Over the past "
+"decades, global initiatives such as UN and WHO programs have "
+"significantly increased access to education, especially for girls. Today,"
+" the majority of girls in low-income countries finish primary school, "
+"which reflects tremendous improvements in education.\n"
 "\n"
 "UPD 2025: the answer status remains correct.</i>"
 
-#: handlers/correct_answer.py:155
+#: handlers/correct_answer.py:151
 msgid ""
 "Вопрос: 2\n"
 "\n"
@@ -91,11 +105,17 @@ msgstr ""
 "Correct answer: In middle-income countries\n"
 "Your answer: {user_answer}\n"
 "\n"
-"<i>Explanation: In the past, the world was indeed divided into "rich" and "poor" countries, but now the majority of the population lives in middle-income countries. This includes China, India, and many other countries where economic growth has helped billions of people rise out of extreme poverty. Most people have access to basic goods such as electricity, water, and education, which confirms this fact.\n"
+"<i>Explanation: In the past, the world was indeed divided into \"rich\" "
+"and \"poor\" countries, but now the majority of the population lives in "
+"middle-income countries. This includes China, India, and many other "
+"countries where economic growth has helped billions of people rise out of"
+" extreme poverty. Most people have access to basic goods such as "
+"electricity, water, and education, which confirms this fact.\n"
 "\n"
-"UPD 2025: the structure has hardly changed, the correct option remains.</i>"
+"UPD 2025: the structure has hardly changed, the correct option "
+"remains.</i>"
 
-#: handlers/correct_answer.py:157
+#: handlers/correct_answer.py:153
 msgid ""
 "Вопрос 3:\n"
 "\n"
@@ -119,7 +139,8 @@ msgid ""
 msgstr ""
 "Question 3:\n"
 "\n"
-"Over the last 20 years, the share of the world's population living in poverty...\n"
+"Over the last 20 years, the share of the world's population living in "
+"poverty...\n"
 "\n"
 "1) ...has almost doubled\n"
 "2) ...has remained almost unchanged\n"
@@ -128,11 +149,17 @@ msgstr ""
 "Correct answer: ...has decreased by almost half\n"
 "Your answer: {user_answer}\n"
 "\n"
-"<i>Explanation: This is one of the most impressive successes of recent decades. Improvements in agriculture, global trade, and international aid programs have enabled billions of people to escape poverty. Although many still live below the poverty line, halving the poverty rate in 20 years is significant progress.\n"
+"<i>Explanation: This is one of the most impressive successes of recent "
+"decades. Improvements in agriculture, global trade, and international aid"
+" programs have enabled billions of people to escape poverty. Although "
+"many still live below the poverty line, halving the poverty rate in 20 "
+"years is significant progress.\n"
 "\n"
-"UPD 2025: looking at the period 1995–2025, the percentage of people living in extreme poverty has decreased from 28% to 9%, almost tripling the reduction.</i>"
+"UPD 2025: looking at the period 1995–2025, the percentage of people "
+"living in extreme poverty has decreased from 28% to 9%, almost tripling "
+"the reduction.</i>"
 
-#: handlers/correct_answer.py:159
+#: handlers/correct_answer.py:155
 msgid ""
 "Вопрос 4:\n"
 "\n"
@@ -165,11 +192,15 @@ msgstr ""
 "Correct answer: 70 years\n"
 "Your answer: {user_answer}\n"
 "\n"
-"<i>Explanation: Life expectancy has sharply increased due to global progress in medicine, vaccination, and improved sanitation. Even in the poorest countries, the average life expectancy has risen. This shows how quickly living conditions can change with access to basic goods.\n"
+"<i>Explanation: Life expectancy has sharply increased due to global "
+"progress in medicine, vaccination, and improved sanitation. Even in the "
+"poorest countries, the average life expectancy has risen. This shows how "
+"quickly living conditions can change with access to basic goods.\n"
 "\n"
-"UPD 2025: according to WHO data for 2023, the global life expectancy is 73 years, the book answer remains valid.</i>"
+"UPD 2025: according to WHO data for 2023, the global life expectancy is "
+"73 years, the book answer remains valid.</i>"
 
-#: handlers/correct_answer.py:161
+#: handlers/correct_answer.py:157
 msgid ""
 "Вопрос 5:\n"
 "\n"
@@ -193,7 +224,9 @@ msgid ""
 msgstr ""
 "Question 5:\n"
 "\n"
-"Today, there are 2 billion children aged 0 to 15 years in the world. According to UN projections, how many children will there be in the world in 2100?\n"
+"Today, there are 2 billion children aged 0 to 15 years in the world. "
+"According to UN projections, how many children will there be in the world"
+" in 2100?\n"
 "\n"
 "1) 4 billion\n"
 "2) 3 billion\n"
@@ -202,11 +235,15 @@ msgstr ""
 "Correct answer: 2 billion\n"
 "Your answer: {user_answer}\n"
 "\n"
-"<i>Explanation: The birth rate worldwide has stabilized. In low-income countries, families are no longer striving to have many children as healthcare and child mortality improve. This stabilization in the number of children means that population growth will occur due to increased life expectancy, rather than due to a rise in birth rates.\n"
+"<i>Explanation: The birth rate worldwide has stabilized. In low-income "
+"countries, families are no longer striving to have many children as "
+"healthcare and child mortality improve. This stabilization in the number "
+"of children means that population growth will occur due to increased life"
+" expectancy, rather than due to a rise in birth rates.\n"
 "\n"
 "UPD 2025: the answer in the test remains relevant.</i>"
 
-#: handlers/correct_answer.py:163
+#: handlers/correct_answer.py:159
 msgid ""
 "Вопрос 6:\n"
 "\n"
@@ -229,20 +266,24 @@ msgid ""
 msgstr ""
 "Question 6:\n"
 "\n"
-"According to UN forecasts, by 2100 the world's population will increase by 4 billion people. What will this be due to?\n"
+"According to UN forecasts, by 2100 the world's population will increase "
+"by 4 billion people. What will this be due to?\n"
 "\n"
-"1) There will be more children (up to 15 years old)\n"
-"2) There will be more adults (from 15 to 74 years old)\n"
-"3) There will be more elderly people (from 75 years old)\n"
+"1) There will be more children (under 15 years old)\n"
+"2) There will be more adults (aged 15 to 74)\n"
+"3) There will be more older people (aged 75 or over)\n"
 "\n"
-"Correct answer: There will be more adults (from 15 to 74 years old)\n"
+"Correct answer: There will be more adults (aged 15 to 74)\n"
 "Your answer: {user_answer}\n"
 "\n"
-"<i>Explanation: The main increase will occur due to the rise in the number of adults who will live longer thanks to improvements in healthcare. The number of children will remain stable, and the proportion of elderly people will also increase, but at a slower rate.\n"
+"<i>Explanation: The main increase will occur due to the rise in the "
+"number of adults who will live longer thanks to improvements in "
+"healthcare. The number of children will remain stable, and the proportion"
+" of elderly people will also increase, but at a slower rate.\n"
 "\n"
 "UPD 2025: the status of the answer is fully preserved.</i>"
 
-#: handlers/correct_answer.py:165
+#: handlers/correct_answer.py:161
 msgid ""
 "Вопрос 7:\n"
 "\n"
@@ -265,20 +306,25 @@ msgid ""
 msgstr ""
 "Question 7:\n"
 "\n"
-"How has the number of deaths per year caused by natural disasters changed over the last 100 years?\n"
+"How has the number of deaths per year caused by natural disasters changed"
+" over the last 100 years?\n"
 "\n"
-"1) Increased more than twice\n"
+"1) More than doubled\n"
 "2) Remained almost unchanged\n"
-"3) Decreased more than twice\n"
+"3) Decreased by more than half\n"
 "\n"
-"Correct answer: Decreased more than twice\n"
+"Correct answer: Decreased by more than half\n"
 "Your answer: {user_answer}\n"
 "\n"
-"<i>Explanation: Thanks to advancements in forecasting technology, improved infrastructure, and international aid, the number of deaths from natural disasters has decreased. Today, we are able to prepare in advance for hurricanes, earthquakes, and other disasters, reducing their impact.\n"
+"<i>Explanation: Thanks to advancements in forecasting technology, "
+"improved infrastructure, and international aid, the number of deaths from"
+" natural disasters has decreased. Today, we are able to prepare in "
+"advance for hurricanes, earthquakes, and other disasters, reducing their "
+"impact.\n"
 "\n"
 "UPD 2025: the trend continues, despite individual disasters.</i>"
 
-#: handlers/correct_answer.py:167
+#: handlers/correct_answer.py:163
 msgid ""
 "Вопрос 8:\n"
 "\n"
@@ -303,7 +349,8 @@ msgid ""
 msgstr ""
 "Question 8:\n"
 "\n"
-"Today, the world's population is about 7 billion people. Which map best shows their distribution?\n"
+"Today, the world's population is about 7 billion people. Which map best "
+"shows their distribution?\n"
 "\n"
 "1) Map I\n"
 "2) Map II\n"
@@ -312,11 +359,16 @@ msgstr ""
 "Correct answer: Map I\n"
 "Your answer: {user_answer}\n"
 "\n"
-"<i>Explanation: The majority of the population lives in Asia, making the distribution of people very uneven. About 4 billion people live in India, China, and other Asian countries. Map I best reflects this fact, showing high population density in the corresponding regions.\n"
+"<i>Explanation: The majority of the population lives in Asia, making the "
+"distribution of people very uneven. About 4 billion people live in India,"
+" China, and other Asian countries. Map I best reflects this fact, showing"
+" high population density in the corresponding regions.\n"
 "\n"
-"UPD 2025: the current world population is ≈8.2 billion: Asia ~4.8 billion, Africa ~1.4 billion, Europe ~0.75 billion, America ~1.05 billion. The correct option with the dominance of Asia remains valid.</i>"
+"UPD 2025: the current world population is ≈8.2 billion: Asia ~4.8 "
+"billion, Africa ~1.4 billion, Europe ~0.75 billion, America ~1.05 "
+"billion. The correct option with the dominance of Asia remains valid.</i>"
 
-#: handlers/correct_answer.py:169
+#: handlers/correct_answer.py:165
 msgid ""
 "Вопрос 9:\n"
 "\n"
@@ -342,7 +394,8 @@ msgid ""
 msgstr ""
 "Question 9:\n"
 "\n"
-"What percentage of one-year-old children in the world are vaccinated today against any diseases?\n"
+"What percentage of one-year-old children in the world are vaccinated "
+"today against any diseases?\n"
 "\n"
 "1) 20 percent\n"
 "2) 50 percent\n"
@@ -351,11 +404,17 @@ msgstr ""
 "Correct answer: 80 percent\n"
 "Your answer: {user_answer}\n"
 "\n"
-"<i>Explanation: Contrary to popular myths, most children in the world receive basic vaccinations. This has been made possible through international programs such as the Global Alliance for Vaccines (GAVI) and support from WHO. These efforts have helped reduce child mortality rates and prevent many diseases.\n"
+"<i>Explanation: Contrary to popular myths, most children in the world "
+"receive basic vaccinations. This has been made possible through "
+"international programs such as the Global Alliance for Vaccines (GAVI) "
+"and support from WHO. These efforts have helped reduce child mortality "
+"rates and prevent many diseases.\n"
 "\n"
-"UPD 2025: According to WHO/UNICEF estimates, coverage of key childhood vaccines by 2023 is around 85-90% on average worldwide. Among 20/50/80, the correct answer remains 80%.</i>"
+"UPD 2025: According to WHO/UNICEF estimates, coverage of key childhood "
+"vaccines by 2023 is around 85-90% on average worldwide. Among 20/50/80, "
+"the correct answer remains 80%.</i>"
 
-#: handlers/correct_answer.py:171
+#: handlers/correct_answer.py:167
 msgid ""
 "Вопрос 10:\n"
 "\n"
@@ -379,7 +438,9 @@ msgid ""
 msgstr ""
 "Question 10:\n"
 "\n"
-"On average worldwide, by the age of 30, men spend 10 years of their lives on education. How many years do women spend on education by the same age?\n"
+"On average worldwide, by the age of 30, men spend 10 years of their lives"
+" on education. How many years do women spend on education by the same "
+"age?\n"
 "\n"
 "1) 9 years\n"
 "2) 6 years\n"
@@ -388,11 +449,15 @@ msgstr ""
 "Correct answer: 9 years\n"
 "Your answer: {user_answer}\n"
 "\n"
-"<i>Explanation: The education gap between men and women has significantly narrowed in recent decades. Today, girls have almost the same educational opportunities as boys, which contributes to improving their status in society.\n"
+"<i>Explanation: The education gap between men and women has significantly"
+" narrowed in recent decades. Today, girls have almost the same "
+"educational opportunities as boys, which contributes to improving their "
+"status in society.\n"
 "\n"
-"UPD 2025: according to UNDP data, the global education gap between genders continues to close. The status of the answer remains correct.</i>"
+"UPD 2025: according to UNDP data, the global education gap between "
+"genders continues to close. The status of the answer remains correct.</i>"
 
-#: handlers/correct_answer.py:173
+#: handlers/correct_answer.py:169
 msgid ""
 "Вопрос 11:\n"
 "\n"
@@ -419,7 +484,9 @@ msgid ""
 msgstr ""
 "Question 11:\n"
 "\n"
-"In 1996, tigers, giant pandas, and black rhinos were listed as endangered species. How many of these three species are currently at risk of extinction?\n"
+"In 1996, tigers, giant pandas, and black rhinos were listed as endangered"
+" species. How many of these three species are currently at risk of "
+"extinction?\n"
 "\n"
 "1) Two\n"
 "2) One\n"
@@ -428,11 +495,17 @@ msgstr ""
 "Correct answer: None\n"
 "Your answer: {user_answer}\n"
 "\n"
-"<i>Explanation: Conservation efforts, such as the establishment of reserves and anti-poaching measures, have allowed these species to recover in numbers. Although threats have not completely disappeared, they are no longer on the brink of extinction, which is a result of global conservation initiatives.\n"
+"<i>Explanation: Conservation efforts, such as the establishment of "
+"reserves and anti-poaching measures, have allowed these species to "
+"recover in numbers. Although threats have not completely disappeared, "
+"they are no longer on the brink of extinction, which is a result of "
+"global conservation initiatives.\n"
 "\n"
-"UPD 2025: all three species are still considered threatened, but the trend is positive - populations are recovering. The status of the answer remains correct.</i>"
+"UPD 2025: all three species are still considered threatened, but the "
+"trend is positive - populations are recovering. The status of the answer "
+"remains correct.</i>"
 
-#: handlers/correct_answer.py:175
+#: handlers/correct_answer.py:171
 msgid ""
 "Вопрос 12:\n"
 "\n"
@@ -464,11 +537,15 @@ msgstr ""
 "Correct answer: 80 percent\n"
 "Your answer: {user_answer}\n"
 "\n"
-"<i>Explanation: Today, about 80% of the world's population has access to electricity. This has been made possible by the development of energy infrastructure, even in remote areas. This figure has particularly improved in low-income countries.\n"
+"<i>Explanation: Today, about 80% of the world's population has access to "
+"electricity. This has been made possible by the development of energy "
+"infrastructure, even in remote areas. This figure has particularly "
+"improved in low-income countries.\n"
 "\n"
-"UPD 2025: electrification has increased from ~80 to ~90%, among the options 20/50/80, the correct answer remains 80%</i>"
+"UPD 2025: electrification has increased from ~80 to ~90%, among the "
+"options 20/50/80, the correct answer remains 80%</i>"
 
-#: handlers/correct_answer.py:177
+#: handlers/correct_answer.py:173
 msgid ""
 "Вопрос 13:\n"
 "\n"
@@ -492,161 +569,170 @@ msgid ""
 msgstr ""
 "Question 13:\n"
 "\n"
-"Global climate experts believe that over the next 100 years, the average temperature...\n"
+"Global climate experts believe that over the next 100 years, the average "
+"temperature...\n"
 "\n"
-"1) ...will increase\n"
+"1) ...will rise\n"
 "2) ...will remain unchanged\n"
-"3) ...will decrease\n"
+"3) ...will fall\n"
 "\n"
-"Correct answer: ...will increase\n"
+"Correct answer: ...will rise\n"
 "Your answer: {user_answer}\n"
 "\n"
-"<i>Explanation: Due to the increasing concentration of greenhouse gases in the atmosphere, global warming will continue to accelerate. Scientists predict a rise in temperature unless measures are taken to reduce CO₂ emissions and other harmful substances.\n"
+"<i>Explanation: Due to the increasing concentration of greenhouse gases "
+"in the atmosphere, global warming will continue to accelerate. Scientists"
+" predict a rise in temperature unless measures are taken to reduce CO₂ "
+"emissions and other harmful substances.\n"
 "\n"
-"UPD 2025: the scientific consensus has not changed, 2024 is recognized as the warmest year in recorded history.</i>"
+"UPD 2025: the scientific consensus has not changed, 2024 is recognized as"
+" the warmest year in recorded history.</i>"
 
-#: handlers/correct_answer.py:240 handlers/correct_answer.py:272
-#: handlers/correct_answer.py:284
+#: handlers/correct_answer.py:236 handlers/correct_answer.py:268
+#: handlers/correct_answer.py:280
 msgid "20 процентов"
 msgstr "20 percent"
 
-#: handlers/correct_answer.py:241
+#: handlers/correct_answer.py:237
 msgid "40 процентов"
 msgstr "40 percent"
 
-#: handlers/correct_answer.py:242
+#: handlers/correct_answer.py:238
 msgid "60 процентов"
 msgstr "60 percent"
 
-#: handlers/correct_answer.py:244
+#: handlers/correct_answer.py:240
 msgid "В странах с низким уровнем доходов"
 msgstr "In low-income countries"
 
-#: handlers/correct_answer.py:245
+#: handlers/correct_answer.py:241
 msgid "В странах со средним уровнем доходов"
-msgstr "In countries with middle-income levels"
+msgstr "In middle-income countries"
 
-#: handlers/correct_answer.py:246
+#: handlers/correct_answer.py:242
 msgid "В странах с высоким уровнем доходов"
 msgstr "In high-income countries"
 
-#: handlers/correct_answer.py:248
+#: handlers/correct_answer.py:244
 msgid "...почти удвоилась"
-msgstr "...almost doubled"
+msgstr "...has almost doubled"
 
-#: handlers/correct_answer.py:249
+#: handlers/correct_answer.py:245
 msgid "...осталась почти неизменной"
-msgstr "...remained almost unchanged"
+msgstr "...has remained almost unchanged"
 
-#: handlers/correct_answer.py:250
+#: handlers/correct_answer.py:246
 msgid "...сократилась почти вдвое"
-msgstr "...has almost halved"
+msgstr "...has decreased by almost half"
 
-#: handlers/correct_answer.py:252
+#: handlers/correct_answer.py:248
 msgid "50 лет"
 msgstr "50 years"
 
-#: handlers/correct_answer.py:253
+#: handlers/correct_answer.py:249
 msgid "60 лет"
 msgstr "60 years"
 
-#: handlers/correct_answer.py:254
+#: handlers/correct_answer.py:250
 msgid "70 лет"
 msgstr "70 years"
 
-#: handlers/correct_answer.py:256
+#: handlers/correct_answer.py:252
 msgid "4 миллиарда"
 msgstr "4 billion"
 
-#: handlers/correct_answer.py:257
+#: handlers/correct_answer.py:253
 msgid "3 миллиарда"
 msgstr "3 billion"
 
-#: handlers/correct_answer.py:258
+#: handlers/correct_answer.py:254
 msgid "2 миллиарда"
 msgstr "2 billion"
 
-#: handlers/correct_answer.py:260
+#: handlers/correct_answer.py:256
 msgid "Будет больше детей (до 15 лет)"
 msgstr "There will be more children (under 15 years old)"
 
-#: handlers/correct_answer.py:261
+#: handlers/correct_answer.py:257
 msgid "Будет больше взрослых (от 15 до 74 лет)"
 msgstr "There will be more adults (aged 15 to 74)"
 
-#: handlers/correct_answer.py:262
+#: handlers/correct_answer.py:258
 msgid "Будет больше стариков (от 75 лет)"
-msgstr "There will be more elderly people (aged 75 and older)"
+msgstr "There will be more older people (aged 75 or over)"
 
-#: handlers/correct_answer.py:264
+#: handlers/correct_answer.py:260
 msgid "Увеличилось более чем в два раза"
-msgstr "Increased by more than two times"
+msgstr "More than doubled"
 
-#: handlers/correct_answer.py:265
+#: handlers/correct_answer.py:261
 msgid "Осталось почти неизменным"
-msgstr "It has remained almost unchanged."
+msgstr "Remained almost unchanged"
 
-#: handlers/correct_answer.py:266
+#: handlers/correct_answer.py:262
 msgid "Уменьшилось более чем в два раза"
 msgstr "Decreased by more than half"
 
-#: handlers/correct_answer.py:268
+#: handlers/correct_answer.py:264
 msgid "Карта I"
 msgstr "Map I"
 
-#: handlers/correct_answer.py:269
+#: handlers/correct_answer.py:265
 msgid "Карта II"
 msgstr "Map II"
 
-#: handlers/correct_answer.py:270
+#: handlers/correct_answer.py:266
 msgid "Карта III"
 msgstr "Map III"
 
-#: handlers/correct_answer.py:273 handlers/correct_answer.py:285
+#: handlers/correct_answer.py:269 handlers/correct_answer.py:281
 msgid "50 процентов"
 msgstr "50 percent"
 
-#: handlers/correct_answer.py:274 handlers/correct_answer.py:286
+#: handlers/correct_answer.py:270 handlers/correct_answer.py:282
 msgid "80 процентов"
 msgstr "80 percent"
 
-#: handlers/correct_answer.py:276
+#: handlers/correct_answer.py:272
 msgid "9 лет"
 msgstr "9 years"
 
-#: handlers/correct_answer.py:277
+#: handlers/correct_answer.py:273
 msgid "6 лет"
 msgstr "6 years"
 
-#: handlers/correct_answer.py:278
+#: handlers/correct_answer.py:274
 msgid "3 года"
 msgstr "3 years"
 
-#: handlers/correct_answer.py:280
+#: handlers/correct_answer.py:276
 msgid "Два"
 msgstr "Two"
 
-#: handlers/correct_answer.py:281
+#: handlers/correct_answer.py:277
 msgid "Один"
 msgstr "One"
 
-#: handlers/correct_answer.py:282
+#: handlers/correct_answer.py:278
 msgid "Ни одного"
-msgstr "Not a single one"
+msgstr "None"
 
-#: handlers/correct_answer.py:288
+#: handlers/correct_answer.py:284
 msgid "...повысится"
-msgstr "...will increase"
+msgstr "...will rise"
 
-#: handlers/correct_answer.py:289
+#: handlers/correct_answer.py:285
 msgid "...останется неизменной"
 msgstr "...will remain unchanged"
 
-#: handlers/correct_answer.py:290
+#: handlers/correct_answer.py:286
 msgid "...понизится"
-msgstr "...will decrease"
+msgstr "...will fall"
 
-#: handlers/correct_answer.py:315
+#: handlers/correct_answer.py:319
+msgid "Сначала завершите тест."
+msgstr "Complete the test first."
+
+#: handlers/correct_answer.py:323
 msgid ""
 "Вы прошли тест!\n"
 "\n"
@@ -658,36 +744,51 @@ msgstr ""
 "Let's look at each question, correct answers and explain why they are "
 "correct."
 
-#: handlers/correct_answer.py:318
+#: handlers/correct_answer.py:326
 msgid "Дальше"
 msgstr "Next"
 
-#: handlers/correct_answer.py:319 handlers/correct_answer.py:351
-#: handlers/correct_answer.py:356 handlers/correct_answer.py:360
-#: handlers/donate.py:50 handlers/donate.py:81 handlers/donate.py:240
-#: handlers/factuality.py:439 handlers/factuality.py:477 handlers/other.py:32
-#: handlers/other.py:127 handlers/other.py:130
+#: handlers/correct_answer.py:327 handlers/correct_answer.py:364
+#: handlers/correct_answer.py:369 handlers/correct_answer.py:373
+#: handlers/donate.py:64 handlers/donate.py:93 handlers/donate.py:136
+#: handlers/donate.py:228 handlers/factuality.py:450 handlers/factuality.py:483
+#: handlers/other.py:56 handlers/other.py:143 handlers/other.py:147
 msgid "↩️ Назад"
 msgstr "↩️ Back"
 
-#: handlers/donate.py:53 handlers/donate.py:87
+#: handlers/correct_answer.py:358
+msgid "Некорректный переход."
+msgstr "Invalid navigation."
+
+#: handlers/correct_answer.py:380
+msgid "Ответы теста не найдены."
+msgstr "Test answers were not found."
+
+#: handlers/correct_answer.py:387
+msgid "Ответ на этот вопрос не найден."
+msgstr "The answer to this question was not found."
+
+#: handlers/donate.py:99 handlers/donate.py:142
 msgid "Поддержать проект донатом"
 msgstr "Support the project with a donation"
 
-#: handlers/donate.py:80
+#: handlers/donate.py:118 handlers/donate.py:122
+msgid "Некорректная сумма."
+msgstr "Invalid amount."
+
+#: handlers/donate.py:132
 msgid "{amount} XTR"
 msgstr "{amount} XTR"
 
-#: handlers/donate.py:88
+#: handlers/donate.py:143
 msgid "На сумму"
 msgstr "On amount"
 
-#: handlers/donate.py:157
-#, python-format
-msgid "Не удалось вернуть донат. Ошибка: %s"
-msgstr "Failed to return the donation. Error: %s"
+#: handlers/donate.py:177
+msgid "Параметры платежа устарели. Создайте новый счёт."
+msgstr "The payment details have expired. Create a new invoice."
 
-#: handlers/donate.py:236
+#: handlers/donate.py:222
 msgid ""
 "<b>Спасибо!</b>\n"
 "Ваш донат успешно принят.\n"
@@ -701,7 +802,27 @@ msgstr ""
 "Transaction ID:\n"
 "<code>{t_id}</code>"
 
-#: handlers/factuality.py:37
+#: handlers/donate.py:322
+msgid "Укажите ID транзакции после команды /refundd."
+msgstr "Enter the transaction ID after the /refundd command."
+
+#: handlers/donate.py:330 handlers/donate.py:366
+msgid "Транзакция не найдена."
+msgstr "Transaction not found."
+
+#: handlers/donate.py:373 handlers/donate.py:389
+msgid "Этот донат уже возвращён."
+msgstr "This donation has already been refunded."
+
+#: handlers/donate.py:396 handlers/donate.py:404
+msgid "Не удалось вернуть донат. Попробуйте позже."
+msgstr "The donation could not be refunded. Try again later."
+
+#: handlers/donate.py:412
+msgid "Донат успешно возвращён."
+msgstr "The donation was refunded successfully."
+
+#: handlers/factuality.py:40
 msgid ""
 "Вопрос 1:\n"
 "\n"
@@ -712,7 +833,7 @@ msgstr ""
 "\n"
 "How many girls today complete primary school in low-income countries?"
 
-#: handlers/factuality.py:38
+#: handlers/factuality.py:41
 msgid ""
 "Вопрос 2:\n"
 "\n"
@@ -722,7 +843,7 @@ msgstr ""
 "\n"
 "Where does the majority of the world's population live?"
 
-#: handlers/factuality.py:39
+#: handlers/factuality.py:42
 msgid ""
 "Вопрос 3:\n"
 "\n"
@@ -730,9 +851,10 @@ msgid ""
 msgstr ""
 "Question 3:\n"
 "\n"
-"Over the last 20 years, the share of the world's population living in poverty..."
+"Over the last 20 years, the share of the world's population living in "
+"poverty..."
 
-#: handlers/factuality.py:40
+#: handlers/factuality.py:43
 msgid ""
 "Вопрос 4:\n"
 "\n"
@@ -742,7 +864,7 @@ msgstr ""
 "\n"
 "What is the current life expectancy in the world?"
 
-#: handlers/factuality.py:41
+#: handlers/factuality.py:44
 msgid ""
 "Вопрос 5:\n"
 "\n"
@@ -751,9 +873,10 @@ msgid ""
 msgstr ""
 "Question 5:\n"
 "\n"
-"Today, there are 2 billion children aged 0 to 15 in the world. How many children, according to UN forecasts, will there be in the world in 2100?"
+"Today, there are 2 billion children aged 0 to 15 in the world. How many "
+"children, according to UN forecasts, will there be in the world in 2100?"
 
-#: handlers/factuality.py:42
+#: handlers/factuality.py:45
 msgid ""
 "Вопрос 6:\n"
 "\n"
@@ -762,9 +885,10 @@ msgid ""
 msgstr ""
 "Question 6:\n"
 "\n"
-"According to UN forecasts, the world's population will increase by 4 billion people by 2100. What will this be due to?"
+"According to UN forecasts, the world's population will increase by 4 "
+"billion people by 2100. What will this be due to?"
 
-#: handlers/factuality.py:43
+#: handlers/factuality.py:46
 msgid ""
 "Вопрос 7:\n"
 "\n"
@@ -773,9 +897,10 @@ msgid ""
 msgstr ""
 "Question 7:\n"
 "\n"
-"How has the number of deaths per year caused by natural disasters changed over the last 100 years?"
+"How has the number of deaths per year caused by natural disasters changed"
+" over the last 100 years?"
 
-#: handlers/factuality.py:44
+#: handlers/factuality.py:47
 msgid ""
 "Вопрос 8:\n"
 "\n"
@@ -787,12 +912,13 @@ msgid ""
 msgstr ""
 "Question 8:\n"
 "\n"
-"Today, the world's population is about 7 billion people. Which map best shows their distribution?\n"
+"Today, the world's population is about 7 billion people. Which map best "
+"shows their distribution?\n"
 "\n"
 "<i>(The map that is in the bot's description ⬆️.\n"
 "Each figure represents 1 billion people)</i>"
 
-#: handlers/factuality.py:45
+#: handlers/factuality.py:48
 msgid ""
 "Вопрос 9:\n"
 "\n"
@@ -800,9 +926,10 @@ msgid ""
 msgstr ""
 "Question 9:\n"
 "\n"
-"How many one-year-old children in the world are vaccinated today against any diseases?"
+"How many one-year-old children in the world are vaccinated today against "
+"any diseases?"
 
-#: handlers/factuality.py:46
+#: handlers/factuality.py:49
 msgid ""
 "Вопрос 10:\n"
 "\n"
@@ -811,9 +938,11 @@ msgid ""
 msgstr ""
 "Question 10:\n"
 "\n"
-"On average worldwide, by the age of 30, men spend 10 years of their lives on education. How many years do women spend on education by the same age?"
+"On average worldwide, by the age of 30, men spend 10 years of their lives"
+" on education. How many years do women spend on education by the same "
+"age?"
 
-#: handlers/factuality.py:47
+#: handlers/factuality.py:50
 msgid ""
 "Вопрос 11:\n"
 "\n"
@@ -823,9 +952,11 @@ msgid ""
 msgstr ""
 "Question 11:\n"
 "\n"
-"In 1996, tigers, giant pandas, and black rhinos were listed as endangered species. How many of these three species are currently at risk of extinction?"
+"In 1996, tigers, giant pandas, and black rhinos were listed as endangered"
+" species. How many of these three species are currently at risk of "
+"extinction?"
 
-#: handlers/factuality.py:48
+#: handlers/factuality.py:51
 msgid ""
 "Вопрос 12:\n"
 "\n"
@@ -835,7 +966,7 @@ msgstr ""
 "\n"
 "How many people in the world have access to electricity?"
 
-#: handlers/factuality.py:49
+#: handlers/factuality.py:52
 msgid ""
 "Вопрос 13:\n"
 "\n"
@@ -844,212 +975,177 @@ msgid ""
 msgstr ""
 "Question 13:\n"
 "\n"
-"Global climate experts believe that over the next 100 years, the average temperature..."
+"Global climate experts believe that over the next 100 years, the average "
+"temperature..."
 
-#: handlers/factuality.py:52 handlers/factuality.py:84
-#: handlers/factuality.py:96
+#: handlers/factuality.py:55 handlers/factuality.py:87
+#: handlers/factuality.py:99
 msgid "1) 20 процентов"
 msgstr "1) 20 percent"
 
-#: handlers/factuality.py:53
+#: handlers/factuality.py:56
 msgid "2) 40 процентов"
 msgstr "2) 40 percent"
 
-#: handlers/factuality.py:54
+#: handlers/factuality.py:57
 msgid "3) 60 процентов"
 msgstr "3) 60 percent"
 
-#: handlers/factuality.py:56
+#: handlers/factuality.py:59
 msgid "1) В странах с низким уровнем доходов"
 msgstr "1) In low-income countries"
 
-#: handlers/factuality.py:57
+#: handlers/factuality.py:60
 msgid "2) В странах со средним уровнем доходов"
-msgstr "2) In countries with a medium income level"
+msgstr "2) In middle-income countries"
 
-#: handlers/factuality.py:58
+#: handlers/factuality.py:61
 msgid "3) В странах с высоким уровнем доходов"
 msgstr "3) In high-income countries"
 
-#: handlers/factuality.py:60
+#: handlers/factuality.py:63
 msgid "1) ...почти удвоилась"
-msgstr "1) ...almost doubled"
-
-#: handlers/factuality.py:61
-msgid "2) ...осталась почти неизменной"
-msgstr "2) ...remained almost unchanged"
-
-#: handlers/factuality.py:62
-msgid "3) ...сократилась почти вдвое"
-msgstr "3) ...has almost halved"
+msgstr "1) ...has almost doubled"
 
 #: handlers/factuality.py:64
+msgid "2) ...осталась почти неизменной"
+msgstr "2) ...has remained almost unchanged"
+
+#: handlers/factuality.py:65
+msgid "3) ...сократилась почти вдвое"
+msgstr "3) ...has decreased by almost half"
+
+#: handlers/factuality.py:67
 msgid "1) 50 лет"
 msgstr "1) 50 years"
 
-#: handlers/factuality.py:65
+#: handlers/factuality.py:68
 msgid "2) 60 лет"
 msgstr "2) 60 years"
 
-#: handlers/factuality.py:66
+#: handlers/factuality.py:69
 msgid "3) 70 лет"
 msgstr "3) 70 years"
 
-#: handlers/factuality.py:68
+#: handlers/factuality.py:71
 msgid "1) 4 миллиарда"
 msgstr "1) 4 billion"
 
-#: handlers/factuality.py:69
+#: handlers/factuality.py:72
 msgid "2) 3 миллиарда"
 msgstr "2) 3 billion"
 
-#: handlers/factuality.py:70
+#: handlers/factuality.py:73
 msgid "3) 2 миллиарда"
 msgstr "3) 2 billion"
 
-#: handlers/factuality.py:72
+#: handlers/factuality.py:75
 msgid "1) Будет больше детей (до 15 лет)"
-msgstr "1) There will be more children (up to 15 years old)"
+msgstr "1) There will be more children (under 15 years old)"
 
-#: handlers/factuality.py:73
+#: handlers/factuality.py:76
 msgid "2) Будет больше взрослых (от 15 до 74 лет)"
 msgstr "2) There will be more adults (aged 15 to 74)"
 
-#: handlers/factuality.py:74
-msgid "3) Будет больше стариков (от 75 лет)"
-msgstr "3) There will be more elderly people (aged 75 and over)"
-
-#: handlers/factuality.py:76
-msgid "1) Увеличилось более чем в два раза"
-msgstr "1) Increased by more than two times"
-
 #: handlers/factuality.py:77
+msgid "3) Будет больше стариков (от 75 лет)"
+msgstr "3) There will be more older people (aged 75 or over)"
+
+#: handlers/factuality.py:79
+msgid "1) Увеличилось более чем в два раза"
+msgstr "1) More than doubled"
+
+#: handlers/factuality.py:80
 msgid "2) Осталось почти неизменным"
 msgstr "2) Remained almost unchanged"
 
-#: handlers/factuality.py:78
+#: handlers/factuality.py:81
 msgid "3) Уменьшилось более чем в два раза"
 msgstr "3) Decreased by more than half"
 
-#: handlers/factuality.py:80
+#: handlers/factuality.py:83
 msgid "1) Карта I"
 msgstr "1) Map I"
 
-#: handlers/factuality.py:81
+#: handlers/factuality.py:84
 msgid "2) Карта II"
 msgstr "2) Map II"
 
-#: handlers/factuality.py:82
+#: handlers/factuality.py:85
 msgid "3) Карта III"
 msgstr "3) Map III"
 
-#: handlers/factuality.py:85 handlers/factuality.py:97
+#: handlers/factuality.py:88 handlers/factuality.py:100
 msgid "2) 50 процентов"
 msgstr "2) 50 percent"
 
-#: handlers/factuality.py:86 handlers/factuality.py:98
+#: handlers/factuality.py:89 handlers/factuality.py:101
 msgid "3) 80 процентов"
 msgstr "3) 80 percent"
 
-#: handlers/factuality.py:88
+#: handlers/factuality.py:91
 msgid "1) 9 лет"
 msgstr "1) 9 years"
 
-#: handlers/factuality.py:89
+#: handlers/factuality.py:92
 msgid "2) 6 лет"
 msgstr "2) 6 years"
 
-#: handlers/factuality.py:90
+#: handlers/factuality.py:93
 msgid "3) 3 года"
 msgstr "3) 3 years"
 
-#: handlers/factuality.py:92
+#: handlers/factuality.py:95
 msgid "1) Два"
 msgstr "1) Two"
 
-#: handlers/factuality.py:93
+#: handlers/factuality.py:96
 msgid "2) Один"
 msgstr "2) One"
 
-#: handlers/factuality.py:94
+#: handlers/factuality.py:97
 msgid "3) Ни одного"
 msgstr "3) None"
 
-#: handlers/factuality.py:100
+#: handlers/factuality.py:103
 msgid "1) ...повысится"
-msgstr "1) ...will increase"
+msgstr "1) ...will rise"
 
-#: handlers/factuality.py:101
+#: handlers/factuality.py:104
 msgid "2) ...останется неизменной"
 msgstr "2) ...will remain unchanged"
 
-#: handlers/factuality.py:102
+#: handlers/factuality.py:105
 msgid "3) ...понизится"
-msgstr "3) ...will decrease"
+msgstr "3) ...will fall"
 
-#: handlers/factuality.py:235
-msgid ""
-"Factuality Test.\n"
-"Тест по книге Ганса Рослинга «Фактологичность»\n"
-"\n"
-"Готовы пройти тест?"
-msgstr ""
-"Factuality Test.\n"
-"Test based on the book by Hans Rosling «Factfulness»\n"
-"\n"
-"Are you ready to take the test?"
+#: handlers/factuality.py:273
+msgid "Тест уже завершён. Вернитесь в главное меню."
+msgstr "The test is already complete. Return to the main menu."
 
-#: handlers/factuality.py:244 handlers/factuality.py:287 handlers/start.py:95
-msgid ""
-"Factuality Test.\n"
-"Тест по книге Ханса Рослинга «Фактологичность»\n"
-"\n"
-"Вы прошли тест!\n"
-"\n"
-"Ваш результат: {correct_count}/13\n"
-msgstr ""
-"Factuality Test.\n"
-"Test based on the book by Hans Rosling «Factfulness»\n"
-"\n"
-"You passed the test!\n"
-"\n"
-"Your result: {correct_count}/13\n"
+#: handlers/factuality.py:308 handlers/factuality.py:321
+msgid "Некорректный ответ."
+msgstr "Invalid answer."
 
-#: handlers/factuality.py:247 handlers/factuality.py:290
-#: handlers/factuality.py:410 handlers/start.py:98
-msgid "Правильные ответы"
-msgstr "Correct answers"
+#: handlers/factuality.py:314 middlewares/screen.py:48
+msgid "Это меню устарело. Используйте последнее сообщение бота."
+msgstr "This menu is outdated. Use the bot's latest message."
 
-#: handlers/factuality.py:248 handlers/factuality.py:291
-#: handlers/factuality.py:411 handlers/start.py:99
-msgid "О книге"
-msgstr "About the book"
+#: handlers/factuality.py:341
+msgid "Ответ не сохранён. Попробуйте ещё раз."
+msgstr "The answer was not saved. Try again."
 
-#: handlers/factuality.py:249 handlers/factuality.py:292
-#: handlers/factuality.py:412 handlers/start.py:100
-msgid "О тесте"
-msgstr "About the test"
+#: handlers/factuality.py:349
+msgid "Не удалось найти данные теста. Нажмите /start."
+msgstr "The test data could not be found. Press /start."
 
-#: handlers/factuality.py:253
-msgid ""
-"Factuality Test.\n"
-"Тест по книге Ганса Рослинга «Фактологичность»\n"
-"\n"
-"Вы остановились на {current_question} вопросе. \n"
-"\n"
-"Желаете продолжить тест?"
-msgstr ""
-"Factuality Test.\n"
-"Test based on the book by Hans Rosling «Factfulness»\n"
-"\n"
-"You stopped at {current_question} question. \n"
-"\n"
-"Do you want to continue the test?"
+#: handlers/factuality.py:366
+msgid "Этот ответ уже был принят."
+msgstr "This answer has already been accepted."
 
-#: handlers/factuality.py:403
-#, python-format
-msgid "Ошибка при сохранении данных в базу: %s"
-msgstr "Error saving data to the database: %s"
+#: handlers/factuality.py:383
+msgid "Показан актуальный вопрос."
+msgstr "The current question is now displayed."
 
 #: handlers/factuality.py:406
 msgid ""
@@ -1061,7 +1157,19 @@ msgstr ""
 "\n"
 "Your result: {correct_count}/13"
 
-#: handlers/factuality.py:427
+#: handlers/factuality.py:413 handlers/start.py:53
+msgid "Правильные ответы"
+msgstr "Correct answers"
+
+#: handlers/factuality.py:414 handlers/start.py:54
+msgid "О книге"
+msgstr "About the book"
+
+#: handlers/factuality.py:415 handlers/start.py:55
+msgid "О тесте"
+msgstr "About the test"
+
+#: handlers/factuality.py:438
 msgid ""
 "📖 О книге «Фактологичность»\n"
 "\n"
@@ -1081,17 +1189,25 @@ msgid ""
 "устаревшие представления. Книга учит мыслить фактологично — опираться на "
 "данные, а не на инстинкты."
 msgstr ""
-"📖 About the book "Factfulness"\n"
+"📖 About the book \"Factfulness\"\n"
 "\n"
-"Hans Rosling, a professor of international health, conducted tests among thousands of people around the world: students, politicians, scientists, and even Nobel laureates.\n"
+"Hans Rosling, a professor of international health, conducted tests among "
+"thousands of people around the world: students, politicians, scientists, "
+"and even Nobel laureates.\n"
 "\n"
-"Most participants performed worse than if a monkey had randomly chosen the answers. Random guessing yields 4 out of 13 correct answers, while people scored only 2-3.\n"
+"Most participants performed worse than if a monkey had randomly chosen "
+"the answers. Random guessing yields 4 out of 13 correct answers, while "
+"people scored only 2-3.\n"
 "\n"
-"Why? Rosling identifies 10 instincts that lead us to dramatize reality: the gap instinct, negativity instinct, straight line instinct, fear instinct, and others. They distort our perception of the world.\n"
+"Why? Rosling identifies 10 instincts that lead us to dramatize reality: "
+"the gap instinct, negativity instinct, straight line instinct, fear "
+"instinct, and others. They distort our perception of the world.\n"
 "\n"
-"The world has become much better than we think, but our brains stubbornly cling to outdated notions. The book teaches us to think factfully — to rely on data rather than instincts."
+"The world has become much better than we think, but our brains stubbornly"
+" cling to outdated notions. The book teaches us to think factfully — to "
+"rely on data rather than instincts."
 
-#: handlers/factuality.py:461
+#: handlers/factuality.py:467
 msgid ""
 "📊 О тесте\n"
 "\n"
@@ -1115,10 +1231,14 @@ msgid ""
 msgstr ""
 "📊 About the test\n"
 "\n"
-"This bot conducts an original test from the book "Factfulness". 13 questions about global trends: poverty, education, life expectancy, ecology.\n"
+"This bot conducts an original test from the book \"Factfulness\". 13 "
+"questions about global trends: poverty, education, life expectancy, "
+"ecology.\n"
 "\n"
 "What is the benefit of the test?\n"
-"It shows the gap between your perceptions and real data. The questions are designed in such a way that most people make mistakes — not out of ignorance, but due to cognitive biases.\n"
+"It shows the gap between your perceptions and real data. The questions "
+"are designed in such a way that most people make mistakes — not out of "
+"ignorance, but due to cognitive biases.\n"
 "\n"
 "Interpretation of results:\n"
 "• Up to 4 points — your brain dramatizes reality\n"
@@ -1129,31 +1249,79 @@ msgstr ""
 "• Completed the test:  {cnt_res}\n"
 "• Average score: {avg_result:.1f}"
 
-#: handlers/other.py:28
+#: handlers/inline.py:28
+msgid "Factuality Test"
+msgstr "Factuality Test"
+
+#: handlers/inline.py:29
+msgid "Проверьте своё понимание глобальных тенденций"
+msgstr "Check your understanding of global trends"
+
+#: handlers/inline.py:31
+msgid ""
+"🌍 Factuality Test\n"
+"\n"
+"Тест по книге Ханса Рослинга «Фактологичность».\n"
+"Проверьте, насколько точно вы воспринимаете мировые тенденции.\n"
+"\n"
+"Попробуйте: @factuality_test_bot"
+msgstr ""
+"🌍 Factuality Test\n"
+"\n"
+"Based on the book ‘Factfulness’ by Hans Rosling.\n"
+"Check how accurately you perceive global trends.\n"
+"\n"
+"Try it: @factuality_test_bot"
+
+#: handlers/other.py:40
 msgid "🇬🇧 Английский"
 msgstr "🇬🇧 English"
 
-#: handlers/other.py:29
+#: handlers/other.py:43
 msgid "🇷🇺 Русский"
 msgstr "🇷🇺 Russian"
 
-#: handlers/other.py:61
+#: handlers/other.py:48
+msgid "🇪🇸 Испанский"
+msgstr "🇪🇸 Spanish"
+
+#: handlers/other.py:51
+msgid "🇺🇦 Украинский"
+msgstr "🇺🇦 Ukrainian"
+
+#: handlers/other.py:66
+msgid "English 🇬🇧"
+msgstr "English 🇬🇧"
+
+#: handlers/other.py:67
+msgid "Español 🇪🇸"
+msgstr "Spanish 🇪🇸"
+
+#: handlers/other.py:68
+msgid "Русский 🇷🇺"
+msgstr "Russian 🇷🇺"
+
+#: handlers/other.py:69
+msgid "Українська 🇺🇦"
+msgstr "Ukrainian 🇺🇦"
+
+#: handlers/other.py:71
 msgid ""
 "Настройки языка\n"
-"Текущий язык: Русский 🇷🇺 \n"
+"Текущий язык: {language}\n"
 "\n"
 "Выберите язык, на котором будет работать бот"
 msgstr ""
 "Language settings\n"
-"Current language: English 🇬🇧 \n"
+"Current language: {language}\n"
 "\n"
 "Select the language in which the bot will work"
 
-#: handlers/other.py:129
+#: handlers/other.py:146
 msgid "Поддержать проект"
 msgstr "Support the project"
 
-#: handlers/other.py:145
+#: handlers/other.py:150
 msgid ""
 "ℹ️ О боте Factuality Test\n"
 "\n"
@@ -1168,46 +1336,35 @@ msgid ""
 "Важное уточнение:\n"
 "Книга и основанный на ней тест написаны в 2015 году. Сейчас 2025, за 10 "
 "лет некоторые цифры изменились (например, население Земли выросло с 7 до "
-"8 млрд). Однако суть осталась той же - тест про когнитивные искажения и "
+"8 млрд). Однако суть осталась той же — тест про когнитивные искажения и "
 "инстинкты, а не про точные цифры. Тренды сохранились.\n"
 "\n"
 "Совет:\n"
-"Проходите тест интуитивно, не гуглите ответы - так вы увидите свои "
+"Проходите тест интуитивно, не гуглите ответы — так вы увидите свои "
 "реальные представления о мире."
 msgstr ""
-"ℹ️ About the Factuality Test Bot\n"
+"ℹ️ About Factuality Test\n"
 "\n"
-"An interactive quiz of 13 questions about global trends. Check how accurately you perceive the real state of the world.\n"
+"An interactive 13-question test about global trends. Check how accurately"
+" you understand the state of the world.\n"
 "\n"
 "How the bot works:\n"
-"• Questions appear sequentially through inline buttons\n"
-"• Messages are updated, not multiplied in the chat\n"
-"• After completing the test, explanations for the answers are available\n"
+"• Questions appear one by one with inline buttons\n"
+"• Messages are updated instead of cluttering the chat\n"
+"• Explanations are available after completing the test\n"
 "\n"
-"Important clarification:\n"
-"The book and the test based on it were written in 2015. Now it is 2025, and over 10 years some figures have changed (for example, the world's population has grown from 7 to 8 billion). However, the essence remains the same - the test is about cognitive biases and instincts, not about exact figures. The trends have remained.\n"
+"Important note:\n"
+"The book and its test were written in 2015. Some figures have changed "
+"since then (for example, the world's population grew from 7 to 8 "
+"billion). The core purpose remains the same: the test examines cognitive "
+"biases and instincts rather than exact figures. The trends remain "
+"relevant.\n"
 "\n"
 "Tip:\n"
-"Take the test intuitively, do not Google the answers - this way you will see your real perceptions of the world."
+"Answer intuitively without searching online to reveal your actual view of"
+" the world."
 
-#: handlers/start.py:50
-msgid ""
-"{user_name}, добро пожаловать в Factuality Test!\n"
-"\n"
-"Этот бот создан на основе книги Ханса Рослинга «Фактологичность». "
-"Пройдите тест из 13 вопросов, чтобы проверить, насколько верно вы "
-"понимаете мировые тенденции.\n"
-"\n"
-"Готовы пройти тест?"
-msgstr ""
-"{user_name}, welcome to Factuality Test!\n"
-"\n"
-"This bot is based on the book by Hans Rosling «Factfulness». Take a test "
-"of 13 questions to check how well you understand global trends.\n"
-"\n"
-"Are you ready to take the test?"
-
-#: handlers/start.py:88
+#: handlers/start.py:36
 msgid ""
 "Factuality Test.\n"
 "Тест по книге Ханса Рослинга «Фактологичность»\n"
@@ -1219,31 +1376,39 @@ msgstr ""
 "\n"
 "Are you ready to take the test?"
 
-#: handlers/start.py:103
+#: handlers/start.py:45
 msgid ""
 "Factuality Test.\n"
 "Тест по книге Ханса Рослинга «Фактологичность»\n"
 "\n"
-"Вы остановились на {current_question} вопросе. \n"
+"Вы прошли тест!\n"
+"\n"
+"Ваш результат: {correct_count}/13\n"
+msgstr ""
+"Factuality Test.\n"
+"Test based on the book by Hans Rosling «Factfulness»\n"
+"\n"
+"You passed the test!\n"
+"\n"
+"Your result: {correct_count}/13\n"
+
+#: handlers/start.py:61
+msgid ""
+"Factuality Test.\n"
+"Тест по книге Ханса Рослинга «Фактологичность»\n"
+"\n"
+"Вы остановились на {current_question} вопросе.\n"
 "Желаете продолжить тест?"
 msgstr ""
 "Factuality Test.\n"
-"Test based on the book by Hans Rosling «Factfulness»\n"
+"A test based on Hans Rosling's book Factfulness\n"
 "\n"
-"You stopped at {current_question} question. \n"
-"Do you want to continue the test?"
+"You stopped at question {current_question}.\n"
+"Would you like to continue?"
 
-#: handlers/start.py:144
+#: handlers/start.py:148
 msgid "{full_name}, Добро пожаловать обратно!"
 msgstr "{full_name}, welcome back!"
-
-#: common/keyboard.py:59
-msgid "Пройти тест"
-msgstr "Take the test"
-
-#: common/keyboard.py:65
-msgid "Продолжить тест"
-msgstr "Continue the test"
 
 #~ msgid ""
 #~ "Вопрос 1:\n"
@@ -2017,146 +2182,153 @@ msgstr "Continue the test"
 #~ " of CO₂ and other harmful "
 #~ "substances.</i>"
 
+#~ msgid "Не удалось вернуть донат. Ошибка: %s"
+#~ msgstr "Failed to return the donation. Error: %s"
 
-#: handlers/correct_answer.py:320
-msgid "Сначала завершите тест."
-msgstr "Complete the test first."
+#~ msgid ""
+#~ "Factuality Test.\n"
+#~ "Тест по книге Ганса Рослинга «Фактологичность»\n"
+#~ "\n"
+#~ "Готовы пройти тест?"
+#~ msgstr ""
+#~ "Factuality Test.\n"
+#~ "Test based on the book by Hans Rosling «Factfulness»\n"
+#~ "\n"
+#~ "Are you ready to take the test?"
 
-#: handlers/correct_answer.py:379
-msgid "Ответы теста не найдены."
-msgstr "Test answers were not found."
+#~ msgid ""
+#~ "Factuality Test.\n"
+#~ "Тест по книге Ганса Рослинга «Фактологичность»\n"
+#~ "\n"
+#~ "Вы остановились на {current_question} вопросе. \n"
+#~ "\n"
+#~ "Желаете продолжить тест?"
+#~ msgstr ""
+#~ "Factuality Test.\n"
+#~ "Test based on the book by Hans Rosling «Factfulness»\n"
+#~ "\n"
+#~ "You stopped at {current_question} question. \n"
+#~ "\n"
+#~ "Do you want to continue the test?"
 
-#: handlers/correct_answer.py:386
-msgid "Ответ на этот вопрос не найден."
-msgstr "The answer to this question was not found."
+#~ msgid "Ошибка при сохранении данных в базу: %s"
+#~ msgstr "Error saving data to the database: %s"
 
-#: handlers/correct_answer.py:357
-msgid "Некорректный переход."
-msgstr "Invalid navigation."
+#~ msgid ""
+#~ "Настройки языка\n"
+#~ "Текущий язык: Русский 🇷🇺 \n"
+#~ "\n"
+#~ "Выберите язык, на котором будет работать бот"
+#~ msgstr ""
+#~ "Language settings\n"
+#~ "Current language: English 🇬🇧 \n"
+#~ "\n"
+#~ "Select the language in which the bot will work"
 
-#: handlers/donate.py:264
-msgid "Донат успешно возвращён."
-msgstr "The donation was refunded successfully."
+#~ msgid ""
+#~ "ℹ️ О боте Factuality Test\n"
+#~ "\n"
+#~ "Интерактивный тест из 13 вопросов о "
+#~ "глобальных трендах. Проверьте, насколько точно"
+#~ " вы представляете реальное состояние мира."
+#~ "\n"
+#~ "\n"
+#~ "Как работает бот:\n"
+#~ "• Вопросы появляются последовательно через inline-кнопки\n"
+#~ "• Сообщения обновляются, а не множатся в чате\n"
+#~ "• После прохождения теста доступны объяснения ответов\n"
+#~ "\n"
+#~ "Важное уточнение:\n"
+#~ "Книга и основанный на ней тест "
+#~ "написаны в 2015 году. Сейчас 2025, "
+#~ "за 10 лет некоторые цифры изменились "
+#~ "(например, население Земли выросло с 7"
+#~ " до 8 млрд). Однако суть осталась "
+#~ "той же - тест про когнитивные "
+#~ "искажения и инстинкты, а не про "
+#~ "точные цифры. Тренды сохранились.\n"
+#~ "\n"
+#~ "Совет:\n"
+#~ "Проходите тест интуитивно, не гуглите "
+#~ "ответы - так вы увидите свои "
+#~ "реальные представления о мире."
+#~ msgstr ""
+#~ "ℹ️ About the Factuality Test Bot\n"
+#~ "\n"
+#~ "An interactive quiz of 13 questions "
+#~ "about global trends. Check how "
+#~ "accurately you perceive the real state"
+#~ " of the world.\n"
+#~ "\n"
+#~ "How the bot works:\n"
+#~ "• Questions appear sequentially through inline buttons\n"
+#~ "• Messages are updated, not multiplied in the chat\n"
+#~ "• After completing the test, "
+#~ "explanations for the answers are "
+#~ "available\n"
+#~ "\n"
+#~ "Important clarification:\n"
+#~ "The book and the test based on "
+#~ "it were written in 2015. Now it"
+#~ " is 2025, and over 10 years "
+#~ "some figures have changed (for example,"
+#~ " the world's population has grown "
+#~ "from 7 to 8 billion). However, the"
+#~ " essence remains the same - the "
+#~ "test is about cognitive biases and "
+#~ "instincts, not about exact figures. The"
+#~ " trends have remained.\n"
+#~ "\n"
+#~ "Tip:\n"
+#~ "Take the test intuitively, do not "
+#~ "Google the answers - this way you"
+#~ " will see your real perceptions of"
+#~ " the world."
 
-#: handlers/donate.py:90 handlers/donate.py:94
-msgid "Некорректная сумма."
-msgstr "Invalid amount."
+#~ msgid ""
+#~ "{user_name}, добро пожаловать в Factuality Test!\n"
+#~ "\n"
+#~ "Этот бот создан на основе книги "
+#~ "Ханса Рослинга «Фактологичность». Пройдите "
+#~ "тест из 13 вопросов, чтобы проверить,"
+#~ " насколько верно вы понимаете мировые "
+#~ "тенденции.\n"
+#~ "\n"
+#~ "Готовы пройти тест?"
+#~ msgstr ""
+#~ "{user_name}, welcome to Factuality Test!\n"
+#~ "\n"
+#~ "This bot is based on the book "
+#~ "by Hans Rosling «Factfulness». Take a"
+#~ " test of 13 questions to check "
+#~ "how well you understand global trends."
+#~ "\n"
+#~ "\n"
+#~ "Are you ready to take the test?"
 
-#: handlers/donate.py:149
-msgid "Параметры платежа устарели. Создайте новый счёт."
-msgstr "The payment details have expired. Create a new invoice."
+#~ msgid ""
+#~ "Factuality Test.\n"
+#~ "Тест по книге Ханса Рослинга «Фактологичность»\n"
+#~ "\n"
+#~ "Вы остановились на {current_question} вопросе. \n"
+#~ "Желаете продолжить тест?"
+#~ msgstr ""
+#~ "Factuality Test.\n"
+#~ "Test based on the book by Hans Rosling «Factfulness»\n"
+#~ "\n"
+#~ "You stopped at {current_question} question. \n"
+#~ "Do you want to continue the test?"
 
-#: handlers/donate.py:226
-msgid "Укажите ID транзакции после команды /refundd."
-msgstr "Enter the transaction ID after the /refundd command."
+#~ msgid "Срок возврата истёк. Возврат возможен в течение 30 дней."
+#~ msgstr "The refund period has expired. Refunds are available for 30 days."
 
-#: handlers/donate.py:232
-msgid "Транзакция не найдена."
-msgstr "Transaction not found."
-
-#: handlers/donate.py:235 handlers/donate.py:257
-msgid "Этот донат уже возвращён."
-msgstr "This donation has already been refunded."
-
-#: handlers/donate.py:245
-msgid "Срок возврата истёк. Возврат возможен в течение 30 дней."
-msgstr "The refund period has expired. Refunds are available for 30 days."
-
-#: handlers/donate.py:260
-msgid "Не удалось вернуть донат. Попробуйте позже."
-msgstr "The donation could not be refunded. Try again later."
-
-#: handlers/factuality.py:288
-msgid "Тест уже завершён. Вернитесь в главное меню."
-msgstr "The test is already complete. Return to the main menu."
-
-#: handlers/factuality.py:324
-msgid "Некорректный ответ."
-msgstr "Invalid answer."
-
-#: handlers/factuality.py:330
-msgid "Это меню устарело. Используйте последнее сообщение бота."
-msgstr "This menu is outdated. Use the bot's latest message."
-
-#: handlers/factuality.py:340
-msgid "Не удалось найти данные теста. Нажмите /start."
-msgstr "The test data could not be found. Press /start."
-
-#: handlers/factuality.py:348 handlers/factuality.py:391
-msgid "Этот ответ уже был принят."
-msgstr "This answer has already been accepted."
-
-#: handlers/factuality.py:364
-msgid "Показан актуальный вопрос."
-msgstr "The current question is now displayed."
-
-#: handlers/factuality.py:384
-msgid "Ответ не сохранён. Попробуйте ещё раз."
-msgstr "The answer was not saved. Try again."
-
-#: handlers/other.py:147
-msgid ""
-"ℹ️ О боте Factuality Test\n"
-"\n"
-"Интерактивный тест из 13 вопросов о глобальных трендах. Проверьте, насколько точно вы"
-" представляете реальное состояние мира.\n"
-"\n"
-"Как работает бот:\n"
-"• Вопросы появляются последовательно через inline-кнопки\n"
-"• Сообщения обновляются, а не множатся в чате\n"
-"• После прохождения теста доступны объяснения ответов\n"
-"\n"
-"Важное уточнение:\n"
-"Книга и основанный на ней тест написаны в 2015 году. Сейчас 2025, за 10 лет некоторые"
-" цифры изменились (например, население Земли выросло с 7 до 8 млрд). Однако суть "
-"осталась той же — тест про когнитивные искажения и инстинкты, а не про точные цифры. "
-"Тренды сохранились.\n"
-"\n"
-"Совет:\n"
-"Проходите тест интуитивно, не гуглите ответы — так вы увидите свои реальные "
-"представления о мире."
-msgstr ""
-"ℹ️ About Factuality Test\n"
-"\n"
-"An interactive 13-question test about global trends. Check how accurately you "
-"understand the state of the world.\n"
-"\n"
-"How the bot works:\n"
-"• Questions appear one by one with inline buttons\n"
-"• Messages are updated instead of cluttering the chat\n"
-"• Explanations are available after completing the test\n"
-"\n"
-"Important note:\n"
-"The book and its test were written in 2015. Some figures have changed since then (for"
-" example, the world's population grew from 7 to 8 billion). The core purpose remains "
-"the same: the test examines cognitive biases and instincts rather than exact figures."
-" The trends remain relevant.\n"
-"\n"
-"Tip:\n"
-"Answer intuitively without searching online to reveal your actual view of the world."
-
-#: handlers/other.py:60
-msgid ""
-"Настройки языка\n"
-"Текущий язык: Русский 🇷🇺\n"
-"\n"
-"Выберите язык, на котором будет работать бот"
-msgstr ""
-"Language settings\n"
-"Current language: English 🇬🇧\n"
-"\n"
-"Select the language in which the bot will work"
-
-#: handlers/start.py:60
-msgid ""
-"Factuality Test.\n"
-"Тест по книге Ханса Рослинга «Фактологичность»\n"
-"\n"
-"Вы остановились на {current_question} вопросе.\n"
-"Желаете продолжить тест?"
-msgstr ""
-"Factuality Test.\n"
-"A test based on Hans Rosling's book Factfulness\n"
-"\n"
-"You stopped at question {current_question}.\n"
-"Would you like to continue?"
+#~ msgid ""
+#~ "Настройки языка\n"
+#~ "Текущий язык: Русский 🇷🇺\n"
+#~ "\n"
+#~ "Выберите язык, на котором будет работать бот"
+#~ msgstr ""
+#~ "Language settings\n"
+#~ "Current language: English 🇬🇧\n"
+#~ "\n"
+#~ "Select the language in which the bot will work"

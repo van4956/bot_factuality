@@ -1,6 +1,6 @@
 """Нормализация поддерживаемых локалей бота."""
 
-SUPPORTED_LOCALES = {"en", "ru"}
+SUPPORTED_LOCALES = {"en", "es", "ru", "uk"}
 
 
 def normalize_locale(value: str | None) -> str:

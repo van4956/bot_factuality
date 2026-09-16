@@ -6,6 +6,7 @@
 - Runs a 13-question test
 - Shows correct answers with explanations
 - Helps reveal common misconceptions about the world
+- Supports English, Russian, Spanish, and Ukrainian
 
 
 ## Main Commands
@@ -13,6 +14,23 @@
 ```
 /information  - Learn more about the bot
 /language     - Choose the bot language
+```
+
+## Localization
+
+The language selector shows English and Russian in the first row, with Spanish
+and Ukrainian below. The selected language is saved without resetting test
+answers. Bot messages and command descriptions are localized; the profile
+description and photo are managed separately through BotFather.
+
+After editing a translation catalog, compile it:
+```
+pybabel compile -d locales -D bot_06_factuality
+```
+
+Run isolated localization checks with the project dependencies installed:
+```
+python -m unittest discover -s testing -p test_localization.py -v
 ```
 
 ## Technologies

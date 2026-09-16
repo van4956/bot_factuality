@@ -56,7 +56,7 @@ class LocaleFromDBMiddleware(BaseMiddleware):
         try:
             state = data.get("state")
             state_data = await state.get_data() if state else {}
-            if state and not state_data.get("locale"):
+            if not state_data.get("locale"):
                 session = data.get("session")
                 user = get_user(event)
                 user_locale = None
@@ -65,7 +65,8 @@ class LocaleFromDBMiddleware(BaseMiddleware):
                 if user is not None:
                     user_locale = user_locale or user.language_code
                 normalized_locale = normalize_locale(user_locale)
-                await state.update_data(locale=normalized_locale)
+                if state:
+                    await state.update_data(locale=normalized_locale)
                 state_data["locale"] = normalized_locale
             data["fsm_data"] = state_data
         except Exception:

@@ -8,12 +8,19 @@ from typing import Any, Awaitable, Callable
 from aiogram import BaseMiddleware
 from aiogram.exceptions import TelegramAPIError
 from aiogram.types import TelegramObject
+from aiogram.utils.i18n import I18n
+
+from common.locale import normalize_locale
 
 logger = logging.getLogger(__name__)
 
 
 class CurrentScreenMiddleware(BaseMiddleware):
     """Пропускать кнопки только последнего рабочего сообщения."""
+
+    def __init__(self, i18n: I18n) -> None:
+        """Получить каталоги для перевода до запуска внутренних middleware."""
+        self.i18n = i18n
 
     async def __call__(
         self,
@@ -30,13 +37,16 @@ class CurrentScreenMiddleware(BaseMiddleware):
         if state_data is None:
             state_data = await state.get_data()
         last_message_id = state_data.get("last_message_id")
-        if not last_message_id or callback.message.message_id == last_message_id:
+        if (
+            not last_message_id
+            or callback.message.message_id == last_message_id
+        ):
             return await handler(event, data)
 
-        if state_data.get("locale") == "en":
-            alert = "This menu is outdated. Use the latest bot message."
-        else:
-            alert = "Это меню устарело. Используйте последнее сообщение бота."
+        alert = self.i18n.gettext(
+            "Это меню устарело. Используйте последнее сообщение бота.",
+            locale=normalize_locale(state_data.get("locale")),
+        )
         await callback.answer(alert, show_alert=True)
         try:
             await callback.message.edit_reply_markup(reply_markup=None)

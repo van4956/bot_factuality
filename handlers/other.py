@@ -4,20 +4,24 @@ from __future__ import annotations
 
 import logging
 
-from aiogram import F, Router
-from aiogram.exceptions import TelegramBadRequest
+from aiogram import Bot, F, Router
+from aiogram.exceptions import TelegramAPIError, TelegramBadRequest
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import (
+    BotCommandScopeChat,
     CallbackQuery,
     InlineKeyboardButton,
     InlineKeyboardMarkup,
     Message,
 )
+from aiogram.utils.i18n import I18n
 from aiogram.utils.i18n import gettext as _
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from common import keyboard
+from common.comands import PRIVATE_COMMANDS
+from common.locale import normalize_locale
 from common.screen import show_command_screen
 from database.orm_answers import orm_get_current_question
 from database.orm_users import orm_update_locale
@@ -41,11 +45,35 @@ def keyboard_language() -> InlineKeyboardMarkup:
             ],
             [
                 InlineKeyboardButton(
+                    text=_("🇪🇸 Испанский"), callback_data="locale_es"
+                ),
+                InlineKeyboardButton(
+                    text=_("🇺🇦 Украинский"), callback_data="locale_uk"
+                ),
+            ],
+            [
+                InlineKeyboardButton(
                     text=_("↩️ Назад"), callback_data="back_to_main"
                 )
             ],
         ]
     )
+
+
+def language_screen(locale: str) -> tuple[str, InlineKeyboardMarkup]:
+    """Сформировать экран выбора языка."""
+    language_labels = {
+        "en": _("English 🇬🇧"),
+        "es": _("Español 🇪🇸"),
+        "ru": _("Русский 🇷🇺"),
+        "uk": _("Українська 🇺🇦"),
+    }
+    text = _(
+        "Настройки языка\n"
+        "Текущий язык: {language}\n\n"
+        "Выберите язык, на котором будет работать бот"
+    ).format(language=language_labels[normalize_locale(locale)])
+    return text, keyboard_language()
 
 
 @other_router.message(Command("language"))
@@ -54,68 +82,51 @@ async def language_cmd(
     state: FSMContext,
 ) -> None:
     """Показать настройки языка в рабочем сообщении."""
+    data = await state.get_data()
+    text, reply_markup = language_screen(data.get("locale", "ru"))
     await show_command_screen(
         message=message,
         state=state,
-        text=_(
-            "Настройки языка\n"
-            "Текущий язык: Русский 🇷🇺\n\n"
-            "Выберите язык, на котором будет работать бот"
-        ),
-        reply_markup=keyboard_language(),
+        text=text,
+        reply_markup=reply_markup,
     )
 
 
-@other_router.callback_query(F.data.in_({"locale_en", "locale_ru"}))
+@other_router.callback_query(
+    F.data.in_({"locale_en", "locale_es", "locale_ru", "locale_uk"})
+)
 async def update_locale_cmd(
     callback: CallbackQuery,
     session: AsyncSession,
     state: FSMContext,
+    i18n: I18n,
+    bot: Bot,
 ) -> None:
     """Сохранить язык и обновить тот же экран."""
-    locale = "en" if callback.data == "locale_en" else "ru"
+    locale = normalize_locale(
+        (callback.data or "locale_ru").removeprefix("locale_")
+    )
     await orm_update_locale(session, callback.from_user.id, locale)
     await state.update_data(locale=locale)
-    await callback.answer()
-
-    if locale == "en":
-        text = (
-            "Language settings\n"
-            "Current language: English 🇬🇧\n\n"
-            "Select the language in which the bot will work"
-        )
-        reply_markup = keyboard.get_callback_btns(
-            btns={
-                "🇬🇧 English": "locale_en",
-                "🇷🇺 Russian": "locale_ru",
-                "↩️ Back": "back_to_main",
-            },
-            sizes=(2, 1),
-        )
-    else:
-        text = (
-            "Настройки языка\n"
-            "Текущий язык: Русский 🇷🇺\n\n"
-            "Выберите язык, на котором будет работать бот"
-        )
-        reply_markup = keyboard.get_callback_btns(
-            btns={
-                "🇬🇧 Английский": "locale_en",
-                "🇷🇺 Русский": "locale_ru",
-                "↩️ Назад": "back_to_main",
-            },
-            sizes=(2, 1),
-        )
-
+    with i18n.use_locale(locale):
+        text, reply_markup = language_screen(locale)
+        try:
+            new_message = await callback.message.edit_text(
+                text=text,
+                reply_markup=reply_markup,
+            )
+            await state.update_data(last_message_id=new_message.message_id)
+        except TelegramBadRequest as error:
+            if "message is not modified" not in error.message.lower():
+                raise
+        await callback.answer()
     try:
-        new_message = await callback.message.edit_text(
-            text=text,
-            reply_markup=reply_markup,
+        await bot.set_my_commands(
+            commands=PRIVATE_COMMANDS[locale],
+            scope=BotCommandScopeChat(chat_id=callback.message.chat.id),
         )
-        await state.update_data(last_message_id=new_message.message_id)
-    except TelegramBadRequest as error:
-        if "message is not modified" not in error.message.lower():
-            raise
+    except TelegramAPIError:
+        logger.exception("Не удалось обновить локализованное меню команд")
 
 
 @other_router.message(Command("information"))
@@ -139,7 +150,8 @@ async def information_cmd(
     text = _(
         "ℹ️ О боте Factuality Test\n\n"
         "Интерактивный тест из 13 вопросов о глобальных трендах. "
-        "Проверьте, насколько точно вы представляете реальное состояние мира.\n\n"
+        "Проверьте, насколько точно вы представляете "
+        "реальное состояние мира.\n\n"
         "Как работает бот:\n"
         "• Вопросы появляются последовательно через inline-кнопки\n"
         "• Сообщения обновляются, а не множатся в чате\n"
