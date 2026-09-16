@@ -15,6 +15,7 @@ from aiogram.utils.i18n import lazy_gettext as __
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from common.keyboard import get_callback_btns
+from common.locale import normalize_locale
 from database.orm_answers import CORRECT_ANSWERS as correct_answers
 from database.orm_answers import (
     orm_get_current_question,
@@ -22,6 +23,7 @@ from database.orm_answers import (
     orm_get_result_statistics,
     orm_save_answer,
 )
+from database.orm_users import orm_register_user
 from handlers.start import main_screen
 
 logger = logging.getLogger(__name__)
@@ -241,10 +243,36 @@ async def start_test_callback(
     current_question = await orm_get_current_question(session, user_id)
     analytics = workflow_data['analytics']
 
-    if current_question is None or current_question > 13:
+    if current_question is None:
+        user = callback_query.from_user
+        registration = await orm_register_user(
+            session,
+            {
+                "user_id": user.id,
+                "user_name": user.username or "None",
+                "full_name": user.full_name or "None",
+                "locale": normalize_locale(user.language_code),
+                "status": "member",
+                "flag": 1,
+            },
+        )
+        current_question = registration.current_question
+
+    if current_question > 13:
+        current_question, result = await orm_get_progress(session, user_id)
+        text, reply_markup = main_screen(current_question or 14, result)
+        new_message = await callback_query.message.edit_text(
+            text=text,
+            reply_markup=reply_markup,
+        )
+        await state.set_state(None)
+        await state.update_data(
+            last_message_id=new_message.message_id,
+            current_question=current_question,
+            result=result,
+        )
         await callback_query.answer(
             _("Тест уже завершён. Вернитесь в главное меню."),
-            show_alert=True,
         )
         return
 

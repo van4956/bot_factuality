@@ -56,18 +56,31 @@ async def orm_register_user(
             flag=data["flag"],
         )
     )
-    session.add(Answers(user_id=data["user_id"], current_question=1))
     try:
+        # Без ORM-связи SQLAlchemy не обязан сам определить порядок INSERT.
+        # Сначала гарантированно создаём родительскую строку пользователя.
+        await session.flush()
+        session.add(Answers(user_id=data["user_id"], current_question=1))
         await session.commit()
     except IntegrityError:
         await session.rollback()
         existing = (await session.execute(query)).one_or_none()
-        if existing is not None and existing[1] is not None:
-            answer_row = existing[1]
-            if repair_answer_progress(answer_row):
-                await session.commit()
-            return UserRegistrationResult(False, answer_row.current_question, answer_row.result)
-        return UserRegistrationResult(False, 1, None)
+        if existing is None:
+            raise
+
+        answer_row = existing[1]
+        if answer_row is None:
+            session.add(Answers(user_id=data["user_id"], current_question=1))
+            await session.commit()
+            return UserRegistrationResult(False, 1, None)
+
+        if repair_answer_progress(answer_row):
+            await session.commit()
+        return UserRegistrationResult(
+            False,
+            answer_row.current_question,
+            answer_row.result,
+        )
     return UserRegistrationResult(True, 1, None)
 
 # получаем одного юзера по его user_id
