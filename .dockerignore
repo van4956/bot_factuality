@@ -1,6 +1,7 @@
 # Python
 __pycache__/
 *.py[cod]
+*.db
 *$py.class
 *.so
 .Python
@@ -48,6 +49,7 @@ database/grafana/
 # IDE
 .vscode/
 .idea/
+.cursor/
 *.sublime-project
 *.sublime-workspace
 
@@ -72,3 +74,5 @@ bot_04_copilot_v2_contents.txt
 # Testing
 testing/
 tests/
+processing_EN_file_po.py
+processing_RU_file_po.py

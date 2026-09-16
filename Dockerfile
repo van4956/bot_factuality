@@ -5,7 +5,6 @@ FROM python:3.11-slim AS builder
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     libc6-dev \
-    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Устанавливаем рабочую директорию в контейнере
@@ -21,6 +20,8 @@ RUN python -m venv /opt/venv && \
 # Второй этап для финального образа
 FROM python:3.11-slim
 
+RUN groupadd --system bot && useradd --system --gid bot --home /app bot
+
 # Копируем виртуальное окружение из builder
 COPY --from=builder /opt/venv /opt/venv
 
@@ -28,7 +29,7 @@ COPY --from=builder /opt/venv /opt/venv
 WORKDIR /app
 
 # Копируем исходный код проекта
-COPY . .
+COPY --chown=bot:bot . .
 
 # Устанавливаем переменные окружения
 ENV PATH="/opt/venv/bin:$PATH"
@@ -38,6 +39,8 @@ ENV PYTHONUNBUFFERED=1
 
 # Проверяем работоспособность установленных пакетов
 RUN python -c "import aiogram"
+
+USER bot
 
 # Команда запуска бота
 CMD ["python", "app.py"]

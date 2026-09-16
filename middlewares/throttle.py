@@ -1,55 +1,34 @@
-import logging
+"""Защита от мгновенных повторов одной inline-кнопки."""
 
-# Инициализируем логгер модуля
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-logger.info("Загружен модуль: %s", __name__)
+from __future__ import annotations
 
-from typing import Any, Awaitable, Callable, Dict
+from typing import Any, Awaitable, Callable
+
 from aiogram import BaseMiddleware
-from aiogram.types import TelegramObject, CallbackQuery, Message
+from aiogram.types import TelegramObject
 from cachetools import TTLCache
 
-# Создаём кэш для троттлинга
-cache = TTLCache(maxsize=float('inf'),  # неограниченное количество пользователей в кэше
-                 ttl=0.5  # время хранения каждого пользователя в кэше (0.5 секунды)
-                 )
+cache: TTLCache[tuple[int, str | None], bool] = TTLCache(
+    maxsize=10_000,
+    ttl=0.3,
+)
 
-# Мидлварь для троттлинга (отслеживание чрезмерных действий пользователей)
+
 class ThrottleMiddleware(BaseMiddleware):
-    """
-    Мидлварь для троттлинга (отслеживание чрезмерных действий пользователей)
-    """
-    def __init__(self) -> None:
-        super().__init__()
-        logger.info("class ThrottleMiddleware __init__")
+    """Отбросить только мгновенный повтор той же callback-кнопки."""
 
-    async def __call__(self, handler: Callable[[TelegramObject, Dict[str, Any]], Awaitable[Any]], event: TelegramObject, data: Dict[str, Any]) -> Any:
-        try:
-            user_id = None
+    async def __call__(
+        self,
+        handler: Callable[[TelegramObject, dict[str, Any]], Awaitable[Any]],
+        event: TelegramObject,
+        data: dict[str, Any],
+    ) -> Any:
+        callback = getattr(event, "callback_query", None)
+        if callback is not None and callback.from_user is not None:
+            key = (callback.from_user.id, callback.data)
+            if key in cache:
+                await callback.answer()
+                return None
+            cache[key] = True
 
-            # Проверяем, является ли событие сообщением от пользователя
-            if hasattr(event, 'message') and hasattr(event.message, 'from_user'):
-                user_id = event.message.from_user.id
-                # logger.info(f"class ThrottleMiddleware  -  User {user_id} -> Message")
-
-            # Проверяем, является ли событие CallbackQuery (инлайн кнопка) от пользователя
-            if hasattr(event, 'callback_query') and hasattr(event.callback_query, 'from_user'):
-                user_id = event.callback_query.from_user.id
-                # logger.info(f"class ThrottleMiddleware  -  User {user_id} -> CallbackQuery")
-
-            # Если user_id найден и он уже в кэше (значит действие недавно уже выполнялось)
-            if user_id is not None:
-                if cache.get(user_id):
-                    logger.info(f"class ThrottleMiddleware  -  User {user_id} -> Blocked")
-                    return
-
-                # Если пользователь не в кэше, добавляем его туда
-                cache[user_id] = True
-
-            # Передаём управление следующему обработчику
-            return await handler(event, data)
-
-        except Exception as e:
-            logger.exception("Ошибка в middleware ThrottleMiddleware: %s", str(e))
-            return await handler(event, data)
+        return await handler(event, data)

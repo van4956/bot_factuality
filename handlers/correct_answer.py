@@ -1,23 +1,19 @@
+"""Просмотр правильных ответов после завершения теста."""
+
 import logging
 
-# Инициализируем логгер модуля
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-logger.info("Загружен модуль: %s", __name__)
-
-from icecream import ic
-ic.configureOutput(includeContext=True, prefix=' >>> Debag >>> ')
-
-from aiogram import Router, F
-from sqlalchemy.ext.asyncio import AsyncSession
+from aiogram import F, Router
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.state import StatesGroup, State
-from aiogram.types import Message, CallbackQuery
+from aiogram.fsm.state import State, StatesGroup
+from aiogram.types import CallbackQuery
 from aiogram.utils.i18n import gettext as _
 from aiogram.utils.i18n import lazy_gettext as __
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from common import keyboard
 from database.orm_answers import orm_get_answer
+
+logger = logging.getLogger(__name__)
 
 # Инициализируем роутер уровня модуля
 correct_answer_router = Router()
@@ -310,8 +306,21 @@ answer_options = {
 
 # хэндлер обработки inline кнопки "Правильные ответы" (correct_answers)
 @correct_answer_router.callback_query(F.data == "correct_answers")
-async def correct_answers_callback(callback_query: CallbackQuery, state: FSMContext, session: AsyncSession, workflow_data: dict):
+async def correct_answers_callback(
+    callback_query: CallbackQuery,
+    state: FSMContext,
+    session: AsyncSession,
+    workflow_data: dict,
+) -> None:
+    """Открыть просмотр объяснений с первого вопроса."""
     user_id = callback_query.from_user.id
+    answers = await orm_get_answer(session, user_id)
+    if answers is None or answers.result is None:
+        await callback_query.answer(
+            _("Сначала завершите тест."),
+            show_alert=True,
+        )
+        return
     text = _("Вы прошли тест!\n\nДавайте рассмотрим каждый вопрос, "
             "правильные ответы и разберём, почему именно они являются верными.")
     reply_markup = keyboard.get_callback_btns(
@@ -322,10 +331,10 @@ async def correct_answers_callback(callback_query: CallbackQuery, state: FSMCont
         text=text,
         reply_markup=reply_markup) # type: ignore
 
-    # data = await state.get_data()
-    # correct_answers_num = data.get('correct_answers_num', 1)
-    # await state.update_data(correct_answers_num=correct_answers_num)
-    await state.update_data(last_message_id=new_message.message_id)
+    await state.update_data(
+        last_message_id=new_message.message_id,
+        correct_answers_num=1,
+    )
     await callback_query.answer()
 
     analytics = workflow_data['analytics']
@@ -335,15 +344,26 @@ async def correct_answers_callback(callback_query: CallbackQuery, state: FSMCont
 
 # хэндлер обработки inline кнопок repeat_next и repeat_back
 @correct_answer_router.callback_query(F.data.startswith("repeat_"))
-async def correct_answers_repeat(callback_query: CallbackQuery, state: FSMContext, session: AsyncSession, workflow_data: dict):
+async def correct_answers_repeat(
+    callback_query: CallbackQuery,
+    state: FSMContext,
+    session: AsyncSession,
+    workflow_data: dict,
+) -> None:
+    """Переключить вопрос в просмотре объяснений."""
     user_id = callback_query.from_user.id
     fsm_data = await state.get_data()
     correct_answers_num = fsm_data.get('correct_answers_num', 1)
     turn_data = callback_query.data.split("_")[-1]
-    if turn_data == "next":
-        correct_answers_num=correct_answers_num + 1
+    if turn_data == "start":
+        correct_answers_num = 1
+    elif turn_data == "next":
+        correct_answers_num = min(13, correct_answers_num + 1)
     elif turn_data == "back":
-        correct_answers_num=correct_answers_num - 1
+        correct_answers_num = max(1, correct_answers_num - 1)
+    else:
+        await callback_query.answer(_("Некорректный переход."), show_alert=True)
+        return
 
     if correct_answers_num == 1:
         reply_markup = keyboard.get_callback_btns(btns={
@@ -361,8 +381,20 @@ async def correct_answers_repeat(callback_query: CallbackQuery, state: FSMContex
 
     text = correct_answers[correct_answers_num]
     user_answer_col = 'answer_' + str(correct_answers_num)
-    user_answer_num: int = int(fsm_data.get(user_answer_col, 0))
-    user_answer_num = user_answer_num if user_answer_num != 0 else getattr(await orm_get_answer(session, user_id), user_answer_col, 1)
+    answers = await orm_get_answer(session, user_id)
+    if answers is None or answers.result is None:
+        await callback_query.answer(
+            _("Ответы теста не найдены."),
+            show_alert=True,
+        )
+        return
+    user_answer_num = getattr(answers, user_answer_col, None)
+    if user_answer_num not in {1, 2, 3}:
+        await callback_query.answer(
+            _("Ответ на этот вопрос не найден."),
+            show_alert=True,
+        )
+        return
 
     user_answer = answer_options[correct_answers_num][user_answer_num]
 

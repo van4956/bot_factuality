@@ -1,150 +1,173 @@
+"""Регистрация пользователя и открытие главного экрана."""
+
+from __future__ import annotations
+
 import logging
+from html import escape
 
-# Инициализируем логгер модуля
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-logger.info("Загружен модуль: %s", __name__)
-
-from icecream import ic
-ic.configureOutput(includeContext=True, prefix=' >>> Debag >>> ')
-
-from aiogram import F, Router, Bot
-from aiogram.filters import CommandStart
-from sqlalchemy.ext.asyncio import AsyncSession
-from aiogram.types import Message, FSInputFile
-from aiogram.filters import ChatMemberUpdatedFilter, KICKED, MEMBER
+from aiogram import Bot, F, Router
+from aiogram.filters import KICKED, MEMBER, ChatMemberUpdatedFilter, CommandStart
 from aiogram.fsm.context import FSMContext
-from aiogram.types import ChatMemberUpdated
+from aiogram.types import ChatMemberUpdated, InlineKeyboardMarkup, Message
 from aiogram.utils.i18n import gettext as _
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from database.orm_users import orm_add_user, orm_get_ids, orm_get_users, orm_update_status
-from database.orm_answers import orm_get_answer, orm_get_current_question, orm_update_current_question, orm_create_answer, orm_get_result
 from common import keyboard
+from common.locale import normalize_locale
+from common.screen import show_command_screen
+from database.orm_users import (
+    orm_get_user,
+    orm_register_user,
+    orm_update_status,
+)
 
-
-# Инициализируем роутер уровня модуля
+logger = logging.getLogger(__name__)
 start_router = Router()
+start_router.message.filter(F.chat.type == "private")
 
-# Команда /start
+
+def main_screen(
+    current_question: int,
+    result: int | None,
+) -> tuple[str, InlineKeyboardMarkup]:
+    """Сформировать главный экран для текущего этапа теста."""
+    if current_question == 1:
+        return (
+            _(
+                "Factuality Test.\n"
+                "Тест по книге Ханса Рослинга «Фактологичность»\n\n"
+                "Готовы пройти тест?"
+            ),
+            keyboard.inline_start_test(),
+        )
+    if current_question > 13:
+        return (
+            _(
+                "Factuality Test.\n"
+                "Тест по книге Ханса Рослинга «Фактологичность»\n\n"
+                "Вы прошли тест!\n\n"
+                "Ваш результат: {correct_count}/13\n"
+            ).format(correct_count=result),
+            keyboard.get_callback_btns(
+                btns={
+                    _("Правильные ответы"): "correct_answers",
+                    _("О книге"): "about_book",
+                    _("О тесте"): "about_test",
+                },
+                sizes=(1, 1, 1),
+            ),
+        )
+    return (
+        _(
+            "Factuality Test.\n"
+            "Тест по книге Ханса Рослинга «Фактологичность»\n\n"
+            "Вы остановились на {current_question} вопросе.\n"
+            "Желаете продолжить тест?"
+        ).format(current_question=current_question),
+        keyboard.inline_continue_test(),
+    )
+
+
 @start_router.message(CommandStart())
-async def start_cmd(message: Message, session: AsyncSession, bot: Bot, workflow_data: dict, state: FSMContext):
-    user_id = message.from_user.id
-    user_name = message.from_user.username if message.from_user.username else 'None'
-    full_name = message.from_user.full_name if message.from_user.full_name else 'None'
-    locale = message.from_user.language_code if message.from_user.language_code else 'ru'
-    data = {'user_id':user_id,
-                            'user_name':user_name,
-                            'full_name':full_name,
-                            'locale':locale,
-                            'status':'member',
-                            'flag':1}
+async def start_cmd(
+    message: Message,
+    session: AsyncSession,
+    bot: Bot,
+    workflow_data: dict,
+    state: FSMContext,
+) -> None:
+    """Зарегистрировать пользователя и показать главный экран."""
+    user = message.from_user
+    user_data = {
+        "user_id": user.id,
+        "user_name": user.username or "None",
+        "full_name": user.full_name or "None",
+        "locale": normalize_locale(user.language_code),
+        "status": "member",
+        "flag": 1,
+    }
 
     try:
-        analytics = workflow_data['analytics']
-        list_users = [user_id for user_id in await orm_get_ids(session)]
-        chat_id = bot.home_group[0]
+        registration = await orm_register_user(session, user_data)
+        current_question = registration.current_question
+        result = registration.result
+        text, reply_markup = main_screen(current_question, result)
+        await state.update_data(
+            current_question=current_question,
+            result=result,
+        )
+        await show_command_screen(message, state, text, reply_markup)
 
-        # если юзер не в базе, то есть впервые написал боту
-        if user_id not in list_users:
-            await bot.send_message(chat_id=chat_id, text=f"✅ @{user_name} - подписался на бота")
-            new_message = await message.answer(text=_('{user_name}, добро пожаловать в Factuality Test!\n\n'
-                                        'Этот бот создан на основе книги Ханса Рослинга «Фактологичность». '
-                                        'Пройдите тест из 13 вопросов, чтобы проверить, насколько верно вы понимаете мировые тенденции.\n\n'
-                                        'Готовы пройти тест?').format(user_name=user_name),
-                                reply_markup=keyboard.inline_start_test())
-            # Добавляем записи нового юзера в таблицы
-            await orm_add_user(session, data)
-            await orm_create_answer(session, user_id)
+        if registration.is_new:
+            safe_name = escape(user.username or user.full_name or "None")
+            await bot.send_message(
+                chat_id=bot.home_group[0],
+                text=f"✅ @{safe_name} - подписался на бота",
+            )
 
-            # Сохраняем новый message_id
-            await state.update_data(last_message_id=new_message.message_id)
-
-            await analytics(user_id=user_id,
-                            category_name="/start",
-                            command_name="/start")
-
-        # если юзер уже в базе
-        elif user_id in list_users:
-
-            # Удаляем команду /start пользователя
-            await message.delete()
-
-            # Получаем сохраненный message_id и current_question из FSM
-            data = await state.get_data()
-            last_message_id = data.get('last_message_id')
-            orm_current_question = await orm_get_current_question(session, user_id)
-            current_question = data.get('current_question', orm_current_question)
-
-            # Если есть предыдущее сообщение, удаляем его
-            if last_message_id:
-                try:
-                    await message.bot.delete_message(chat_id=message.chat.id,
-                                                    message_id=last_message_id)
-                except Exception as e:
-                    logger.error("Ошибка при удалении сообщения: %s", e)
-
-            # Отправляем новое сообщение с учетом текущего вопроса
-            if current_question == 1:
-                new_message = await message.answer(text=_('Factuality Test.\nТест по книге Ханса Рослинга «Фактологичность»\n\n'
-                                            'Готовы пройти тест?'),
-                                     reply_markup=keyboard.inline_start_test())
-            elif current_question > 13:
-                data = await state.get_data()
-                orm_correct_count = await orm_get_result(session, user_id)
-                correct_count = data.get('result', orm_correct_count)
-                new_message = await message.answer(text=_('Factuality Test.\nТест по книге Ханса Рослинга «Фактологичность»\n\n'
-                                            'Вы прошли тест!\n\n'
-                                            'Ваш результат: {correct_count}/13\n').format(correct_count=correct_count),
-                                     reply_markup=keyboard.get_callback_btns(btns={_('Правильные ответы'):'correct_answers',
-                                                                                 _('О книге'):'about_book',
-                                                                                 _('О тесте'):'about_test'},
-                                                                            sizes=(1,1,1)))
-            else:
-                new_message = await message.answer(text=_('Factuality Test.\nТест по книге Ханса Рослинга «Фактологичность»\n\n'
-                                            'Вы остановились на {current_question} вопросе. \n'
-                                            'Желаете продолжить тест?').format(current_question=current_question),
-                                     reply_markup=keyboard.inline_continue_test())
-
-            # Сохраняем новый message_id
-            await state.update_data(last_message_id=new_message.message_id)
-
-            await analytics(user_id=user_id,
-                            category_name="/start",
-                            command_name="/restart")
-
-    except Exception as e:
-        logger.error("Ошибка при отправке сообщения: %s", str(e))
+        await workflow_data["analytics"](
+            user_id=user.id,
+            category_name="/start",
+            command_name="/start" if registration.is_new else "/restart",
+        )
+    except Exception:
+        await session.rollback()
+        logger.exception("Ошибка обработки /start пользователя %s", user.id)
 
 
-
-# Этот хэндлер будет срабатывать на блокировку бота пользователем
-@start_router.my_chat_member(ChatMemberUpdatedFilter(member_status_changed=KICKED))
-async def process_user_blocked_bot(event: ChatMemberUpdated, session: AsyncSession, bot: Bot, workflow_data: dict):
+@start_router.my_chat_member(
+    ChatMemberUpdatedFilter(member_status_changed=KICKED)
+)
+async def process_user_blocked_bot(
+    event: ChatMemberUpdated,
+    session: AsyncSession,
+    bot: Bot,
+    workflow_data: dict,
+) -> None:
+    """Зафиксировать блокировку бота пользователем."""
     user_id = event.from_user.id
-    chat_id = bot.home_group[0]
-    user_name = event.from_user.username if event.from_user.username else event.from_user.full_name
-    await orm_update_status(session, user_id, 'kicked')
-    await bot.send_message(chat_id = chat_id, text = f"⛔️ @{user_name} - заблокировал бота")
+    safe_name = escape(event.from_user.username or event.from_user.full_name)
+    await orm_update_status(session, user_id, "kicked")
+    await bot.send_message(
+        chat_id=bot.home_group[0],
+        text=f"⛔️ @{safe_name} - заблокировал бота",
+    )
+    await workflow_data["analytics"](
+        user_id=user_id,
+        category_name="/start",
+        command_name="/blocked",
+    )
 
-    analytics = workflow_data['analytics']
-    await analytics(user_id=user_id,
-                    category_name="/start",
-                    command_name="/blocked")
 
-# Этот хэндлер будет срабатывать на разблокировку бота пользователем
-@start_router.my_chat_member(ChatMemberUpdatedFilter(member_status_changed=MEMBER))
-async def process_user_unblocked_bot(event: ChatMemberUpdated, session: AsyncSession, bot: Bot, workflow_data: dict):
+@start_router.my_chat_member(
+    ChatMemberUpdatedFilter(member_status_changed=MEMBER)
+)
+async def process_user_unblocked_bot(
+    event: ChatMemberUpdated,
+    session: AsyncSession,
+    bot: Bot,
+    workflow_data: dict,
+) -> None:
+    """Зафиксировать разблокировку бота пользователем."""
     user_id = event.from_user.id
+    if await orm_get_user(session, user_id) is None:
+        return
 
-    if user_id in await orm_get_ids(session):
-        chat_id = bot.home_group[0]
-        full_name = event.from_user.full_name if event.from_user.full_name else "NaN"
-        user_name = event.from_user.username if event.from_user.username else full_name
-        await orm_update_status(session, user_id, 'member')
-        await bot.send_message(chat_id = user_id, text = _('{full_name}, Добро пожаловать обратно!').format(full_name=full_name))
-        await bot.send_message(chat_id = chat_id, text = f"♻️ @{user_name} - разблокировал бота")
-
-        analytics = workflow_data['analytics']
-        await analytics(user_id=user_id,
-                        category_name="/start",
-                        command_name="/unblocked")
+    full_name = event.from_user.full_name or ""
+    safe_name = escape(event.from_user.username or full_name)
+    await orm_update_status(session, user_id, "member")
+    await bot.send_message(
+        chat_id=user_id,
+        text=_("{full_name}, Добро пожаловать обратно!").format(
+            full_name=escape(full_name)
+        ),
+    )
+    await bot.send_message(
+        chat_id=bot.home_group[0],
+        text=f"♻️ @{safe_name} - разблокировал бота",
+    )
+    await workflow_data["analytics"](
+        user_id=user_id,
+        category_name="/start",
+        command_name="/unblocked",
+    )

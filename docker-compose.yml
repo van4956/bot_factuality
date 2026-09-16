@@ -1,16 +1,22 @@
-version: '3.9'
-
 services:
   bot:
     build: .
     container_name: container_bot_2
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
     depends_on:
       db:
-        condition: service_started
+        condition: service_healthy
       redis:
-        condition: service_started
+        condition: service_healthy
       influxdb:
-        condition: service_started
+        condition: service_healthy
     deploy:
       resources: # Ограничения ресурсов
         limits:
@@ -32,6 +38,7 @@ services:
       - REDIS_DB=${REDIS_DB}
       - REDIS_HOST=${REDIS_HOST}
       - REDIS_PORT=${REDIS_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD:?Set REDIS_PASSWORD}
       - INFLUXDB_URL=${INFLUXDB_URL}
       - INFLUXDB_TOKEN=${INFLUXDB_TOKEN}
       - INFLUXDB_ORG=${INFLUXDB_ORG}
@@ -58,17 +65,35 @@ services:
     networks:
       - botnet_2
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
   redis:
     image: redis:7.2-alpine # Образ Redis версии Alpine
     container_name: container_redis_2
-    ports:
-      - "6380:6379"
+    command:
+      - redis-server
+      - --appendonly
+      - "yes"
+      - --requirepass
+      - ${REDIS_PASSWORD:?Set REDIS_PASSWORD}
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?Set REDIS_PASSWORD}
     volumes:
       - redis_data_2:/data # Сохраняем данные Redis как Docker volume
     networks:
       - botnet_2
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "REDISCLI_AUTH=\"$${REDIS_PASSWORD}\" redis-cli ping | grep -q PONG"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
 
   influxdb:
     image: influxdb:2.7 # Образ InfluxDB версии 2.7

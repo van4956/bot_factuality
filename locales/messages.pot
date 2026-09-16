@@ -935,3 +935,120 @@ msgstr ""
 msgid "Продолжить тест"
 msgstr ""
 
+
+
+#: handlers/correct_answer.py:320
+msgid "Сначала завершите тест."
+msgstr ""
+
+#: handlers/correct_answer.py:379
+msgid "Ответы теста не найдены."
+msgstr ""
+
+#: handlers/correct_answer.py:386
+msgid "Ответ на этот вопрос не найден."
+msgstr ""
+
+#: handlers/correct_answer.py:357
+msgid "Некорректный переход."
+msgstr ""
+
+#: handlers/donate.py:264
+msgid "Донат успешно возвращён."
+msgstr ""
+
+#: handlers/donate.py:90 handlers/donate.py:94
+msgid "Некорректная сумма."
+msgstr ""
+
+#: handlers/donate.py:149
+msgid "Параметры платежа устарели. Создайте новый счёт."
+msgstr ""
+
+#: handlers/donate.py:226
+msgid "Укажите ID транзакции после команды /refundd."
+msgstr ""
+
+#: handlers/donate.py:232
+msgid "Транзакция не найдена."
+msgstr ""
+
+#: handlers/donate.py:235 handlers/donate.py:257
+msgid "Этот донат уже возвращён."
+msgstr ""
+
+#: handlers/donate.py:245
+msgid "Срок возврата истёк. Возврат возможен в течение 30 дней."
+msgstr ""
+
+#: handlers/donate.py:260
+msgid "Не удалось вернуть донат. Попробуйте позже."
+msgstr ""
+
+#: handlers/factuality.py:288
+msgid "Тест уже завершён. Вернитесь в главное меню."
+msgstr ""
+
+#: handlers/factuality.py:324
+msgid "Некорректный ответ."
+msgstr ""
+
+#: handlers/factuality.py:330
+msgid "Это меню устарело. Используйте последнее сообщение бота."
+msgstr ""
+
+#: handlers/factuality.py:340
+msgid "Не удалось найти данные теста. Нажмите /start."
+msgstr ""
+
+#: handlers/factuality.py:348 handlers/factuality.py:391
+msgid "Этот ответ уже был принят."
+msgstr ""
+
+#: handlers/factuality.py:364
+msgid "Показан актуальный вопрос."
+msgstr ""
+
+#: handlers/factuality.py:384
+msgid "Ответ не сохранён. Попробуйте ещё раз."
+msgstr ""
+
+#: handlers/other.py:147
+msgid ""
+"ℹ️ О боте Factuality Test\n"
+"\n"
+"Интерактивный тест из 13 вопросов о глобальных трендах. Проверьте, насколько точно вы"
+" представляете реальное состояние мира.\n"
+"\n"
+"Как работает бот:\n"
+"• Вопросы появляются последовательно через inline-кнопки\n"
+"• Сообщения обновляются, а не множатся в чате\n"
+"• После прохождения теста доступны объяснения ответов\n"
+"\n"
+"Важное уточнение:\n"
+"Книга и основанный на ней тест написаны в 2015 году. Сейчас 2025, за 10 лет некоторые"
+" цифры изменились (например, население Земли выросло с 7 до 8 млрд). Однако суть "
+"осталась той же — тест про когнитивные искажения и инстинкты, а не про точные цифры. "
+"Тренды сохранились.\n"
+"\n"
+"Совет:\n"
+"Проходите тест интуитивно, не гуглите ответы — так вы увидите свои реальные "
+"представления о мире."
+msgstr ""
+
+#: handlers/other.py:60
+msgid ""
+"Настройки языка\n"
+"Текущий язык: Русский 🇷🇺\n"
+"\n"
+"Выберите язык, на котором будет работать бот"
+msgstr ""
+
+#: handlers/start.py:60
+msgid ""
+"Factuality Test.\n"
+"Тест по книге Ханса Рослинга «Фактологичность»\n"
+"\n"
+"Вы остановились на {current_question} вопросе.\n"
+"Желаете продолжить тест?"
+msgstr ""

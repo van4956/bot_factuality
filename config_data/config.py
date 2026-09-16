@@ -1,12 +1,11 @@
+"""Загрузка настроек приложения из переменных окружения."""
+
 import logging
-
-# Инициализируем логгер модуля
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-logger.info("Загружен модуль: %s", __name__)
-
 from dataclasses import dataclass
+
 from environs import Env
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -37,6 +36,7 @@ class Redis:
     db: int
     host: str
     port: int
+    password: str
 
 @dataclass
 class InfluxDB:
@@ -93,9 +93,10 @@ def load_config(path: str | None = None) -> Config:
             db_lite=env('DB_LITE')
             ),
         redis=Redis(
-            host=env('REDIS_HOST'),
-            port=env('REDIS_PORT'),
-            db=env('REDIS_DB')
+            host=env.str('REDIS_HOST'),
+            port=env.int('REDIS_PORT'),
+            db=env.int('REDIS_DB'),
+            password=env.str('REDIS_PASSWORD'),
             ),
         influx=InfluxDB(
             admin=env('INFLUXDB_ADMIN_USER'),
