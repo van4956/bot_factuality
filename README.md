@@ -19,7 +19,9 @@
 - 🐍 Python + Aiogram 3.x
 - 📊 PostgreSQL + SQLAlchemy
 - 🔄 Redis for state management
-- 📈 InfluxDB + Grafana for analytics
+
+Docker Compose starts only the bot and its required PostgreSQL and Redis
+services.
 
 
 ## About the book "Factfulness"

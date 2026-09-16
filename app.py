@@ -2,7 +2,6 @@
 
 import asyncio
 import logging
-from datetime import datetime, timezone
 
 from aiogram import Bot, Dispatcher, types
 from aiogram.client.default import DefaultBotProperties
@@ -11,9 +10,6 @@ from aiogram.fsm.storage.memory import MemoryStorage, SimpleEventIsolation
 from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.fsm.strategy import FSMStrategy
 from aiogram.utils.i18n import I18n
-from influxdb_client import InfluxDBClient, Point  # type: ignore
-from influxdb_client.client.write_api import SYNCHRONOUS
-from influxdb_client.rest import ApiException
 from redis.asyncio.client import Redis
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
@@ -52,62 +48,6 @@ sqlalchemy_logger.propagate = True
 
 # Загружаем конфиг в переменную config
 config: Config = load_config()
-
-ANALYTICS_QUEUE_SIZE = 10_000
-analytics_queue: asyncio.Queue[Point | None] = asyncio.Queue(
-    maxsize=ANALYTICS_QUEUE_SIZE
-)
-analytics_client: InfluxDBClient | None = None
-analytics_worker_task: asyncio.Task[None] | None = None
-
-# Инициализируем функцию для сбора аналитики, взаимодействуем с InfluxDB и Grafana
-async def analytics(
-    user_id: int,
-    command_name: str,
-    category_name: str,
-) -> None:
-    """Поставить событие аналитики в неблокирующую очередь."""
-    if docker != 1:
-        return
-
-    point = (
-        Point("bot_command_usage")
-        .tag("category", category_name)
-        .tag("command", command_name)
-        .tag("user_id", str(user_id))
-        .tag("ping", "ping")
-        .time(datetime.now(timezone.utc))
-        .field("value", 1)
-    )
-    try:
-        analytics_queue.put_nowait(point)
-    except asyncio.QueueFull:
-        logger.warning("Очередь аналитики заполнена; событие пропущено")
-
-
-async def analytics_worker() -> None:
-    """Записывать события InfluxDB вне цикла обработки Telegram."""
-    if analytics_client is None:
-        return
-
-    write_api = analytics_client.write_api(write_options=SYNCHRONOUS)
-    while True:
-        point = await analytics_queue.get()
-        try:
-            if point is None:
-                return
-            await asyncio.to_thread(
-                write_api.write,
-                bucket=config.influx.bucket,
-                org=config.influx.org,
-                record=point,
-            )
-        except (ConnectionError, TimeoutError, ApiException):
-            logger.exception("Не удалось записать событие в InfluxDB")
-        except Exception:
-            logger.exception("Непредвиденная ошибка записи аналитики")
-        finally:
-            analytics_queue.task_done()
 
 
 # Инициализируем объект хранилища
@@ -174,18 +114,10 @@ else:
 session_maker = async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
 
 
-# Помещаем нужные объекты в workflow_data диспетчера
-some_var_1 = 1
-some_var_2 = 'Some text'
-dp.workflow_data.update({'my_int_var': some_var_1,
-                         'my_text_var': some_var_2,
-                         'analytics': analytics})
-
-
 # Подключаем мидлвари
 dp.update.outer_middleware(throttle.ThrottleMiddleware())  # тротлинг чрезмерно частых действий пользователей
 dp.update.outer_middleware(db.DataBaseSession(session_pool=session_maker))  # мидлварь для прокидывания сессии БД
-dp.update.outer_middleware(locale.LocaleFromDBMiddleware(workflow_data=dp.workflow_data))  # определяем локаль из БД и передам ее в FSMContext
+dp.update.outer_middleware(locale.LocaleFromDBMiddleware())  # определяем локаль из БД и передам ее в FSMContext
 dp.update.outer_middleware(screen.CurrentScreenMiddleware())
 i18n = I18n(path="locales", default_locale="ru", domain="bot_06_factuality")  # создаем объект I18n
 dp.update.middleware(locale.CachedLocaleMiddleware(i18n=i18n))
@@ -210,18 +142,7 @@ ALLOWED_UPDATES = dp.resolve_used_update_types()  # Отбираем тольк�
 
 # Функция сработает при запуске бота
 async def on_startup() -> None:
-    """Подготовить внешние клиенты и сверить платежи."""
-    global analytics_client, analytics_worker_task
-
-    if docker == 1:
-        analytics_client = InfluxDBClient(
-            url=config.influx.url,
-            token=config.influx.token,
-            org=config.influx.org,
-            timeout=2_000,
-        )
-        analytics_worker_task = asyncio.create_task(analytics_worker())
-
+    """Сверить платежи и отправить служебное сообщение."""
     try:
         restored = await asyncio.wait_for(
             donate.reconcile_recent_payments(bot, session_maker),
@@ -255,15 +176,6 @@ async def on_shutdown() -> None:
             "Не удалось отправить служебное сообщение об остановке"
         )
 
-    if analytics_worker_task is not None:
-        await analytics_queue.put(None)
-        try:
-            await asyncio.wait_for(analytics_queue.join(), timeout=5)
-        except TimeoutError:
-            analytics_worker_task.cancel()
-        await asyncio.gather(analytics_worker_task, return_exceptions=True)
-    if analytics_client is not None:
-        await asyncio.to_thread(analytics_client.close)
     await engine.dispose()
 
 # Главная функция конфигурирования и запуска бота

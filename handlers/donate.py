@@ -183,7 +183,6 @@ async def on_successful_payment(
     message: Message,
     state: FSMContext,
     session: AsyncSession,
-    workflow_data: dict,
 ) -> None:
     """Надёжно зарегистрировать успешный платёж."""
     payment = message.successful_payment
@@ -237,13 +236,6 @@ async def on_successful_payment(
         invoice_payload=None,
         last_payment_charge_id=charge_id,
     )
-    await workflow_data["analytics"](
-        user_id=message.from_user.id,
-        category_name="/options",
-        command_name="/donate",
-    )
-
-
 async def reconcile_recent_payments(
     bot: Bot,
     session_pool: async_sessionmaker[AsyncSession],

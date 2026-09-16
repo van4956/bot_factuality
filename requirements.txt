@@ -6,6 +6,5 @@ Babel==2.16.0
 cachetools==5.5.0
 environs==11.2.1
 greenlet==3.2.5
-influxdb-client==1.48.0
 redis==5.2.0
 SQLAlchemy==2.0.36

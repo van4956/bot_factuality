@@ -21,7 +21,9 @@
 - 🐍 Python + Aiogram 3.x
 - 📊 PostgreSQL + SQLAlchemy
 - 🔄 Redis для управления состояниями
-- 📈 InfluxDB + Grafana для аналитики
+
+Docker Compose запускает только бота и необходимые ему сервисы PostgreSQL и
+Redis.
 
 
 ## О книге «Фактологичность»

@@ -310,7 +310,6 @@ async def correct_answers_callback(
     callback_query: CallbackQuery,
     state: FSMContext,
     session: AsyncSession,
-    workflow_data: dict,
 ) -> None:
     """Открыть просмотр объяснений с первого вопроса."""
     user_id = callback_query.from_user.id
@@ -337,18 +336,12 @@ async def correct_answers_callback(
     )
     await callback_query.answer()
 
-    analytics = workflow_data['analytics']
-    await analytics(user_id=user_id,
-                    category_name="/info",
-                    command_name="/correct_answers")
-
 # хэндлер обработки inline кнопок repeat_next и repeat_back
 @correct_answer_router.callback_query(F.data.startswith("repeat_"))
 async def correct_answers_repeat(
     callback_query: CallbackQuery,
     state: FSMContext,
     session: AsyncSession,
-    workflow_data: dict,
 ) -> None:
     """Переключить вопрос в просмотре объяснений."""
     user_id = callback_query.from_user.id
@@ -405,8 +398,3 @@ async def correct_answers_repeat(
     await state.update_data(correct_answers_num=correct_answers_num)
     await state.update_data(last_message_id=new_message.message_id)
     await callback_query.answer()
-
-    analytics = workflow_data['analytics']
-    await analytics(user_id=user_id,
-                    category_name="/info",
-                    command_name="/correct_answers")

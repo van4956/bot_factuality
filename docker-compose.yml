@@ -15,8 +15,6 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-      influxdb:
-        condition: service_healthy
     deploy:
       resources: # Ограничения ресурсов
         limits:
@@ -39,14 +37,6 @@ services:
       - REDIS_HOST=${REDIS_HOST}
       - REDIS_PORT=${REDIS_PORT}
       - REDIS_PASSWORD=${REDIS_PASSWORD:?Set REDIS_PASSWORD}
-      - INFLUXDB_URL=${INFLUXDB_URL}
-      - INFLUXDB_TOKEN=${INFLUXDB_TOKEN}
-      - INFLUXDB_ORG=${INFLUXDB_ORG}
-      - INFLUXDB_BUCKET=${INFLUXDB_BUCKET}
-      - INFLUXDB_ADMIN_USER=${INFLUXDB_ADMIN_USER}
-      - INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_ADMIN_PASSWORD}
-      - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER}
-      - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}
     networks:
       - botnet_2 # Подключение к сети botnet_2
     restart: unless-stopped # Автоматический перезапуск контейнера, если он остановится
@@ -95,48 +85,6 @@ services:
       retries: 10
       start_period: 5s
 
-  influxdb:
-    image: influxdb:2.7 # Образ InfluxDB версии 2.7
-    container_name: container_influxdb_2
-    environment:
-      # Параметры инициализации InfluxDB
-      - DOCKER_INFLUXDB_INIT_MODE=setup
-      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_ADMIN_USER}
-      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_ADMIN_PASSWORD}
-      - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_ORG}
-      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_BUCKET}
-      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUXDB_TOKEN}
-    volumes:
-      - ./database/influxdb:/var/lib/influxdb2 # Сохраняем данные InfluxDB на локальном диске
-    command: influxd run --bolt-path /var/lib/influxdb2/influxd.bolt --engine-path /var/lib/influxdb2/engine --store bolt
-    ports:
-      - "8087:8086"
-    networks:
-      - botnet_2
-    restart: unless-stopped
-    healthcheck: # Проверка состояния InfluxDB
-      test: ["CMD", "curl", "-f", "http://localhost:8086/health"]
-      interval: 5s
-      timeout: 10s
-      retries: 5
-      start_period: 30s
-
-  grafana:
-    image: grafana/grafana:10.2.0 # Образ Grafana для визуализации данных
-    container_name: container_grafana_2
-    environment:
-      - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER}
-      - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}
-    ports:
-      - "3001:3000"
-    user: "472:472" # Используем UID и GID для grafana
-    volumes:
-      - grafana_data:/var/lib/grafana:rw
-    networks:
-      - botnet_2
-    restart: unless-stopped
-    command: bash -c "chown -R 472:472 /var/lib/grafana && /run.sh"
-
 networks:
   botnet_2:
     name: botnet_2 # Принудительно задаем имя сети
@@ -145,5 +93,3 @@ networks:
 volumes:
   redis_data_2:
     driver: local # Используем локальный драйвер для хранения данных Redis
-  grafana_data:
-    driver: local

@@ -21,15 +21,9 @@ Rosling_U._Faktologichnost_Desyat_Pr.txt
 prescription.txt
 bot_06_factuality_contents.txt
 
-# Исключаем все файлы в папках баз данных, но оставляем сами папки
-/database/influxdb/*
-!/database/influxdb/.gitkeep
-
+# Исключаем файлы базы данных, но оставляем каталог PostgreSQL
 /database/postgres/*
 !/database/postgres/.gitkeep
-
-/database/grafana/*
-!/database/grafana/.gitkeep
 
 # Byte-compiled / optimized / compiled Python files
 __pycache__/

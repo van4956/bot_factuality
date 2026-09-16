@@ -73,7 +73,6 @@ async def start_cmd(
     message: Message,
     session: AsyncSession,
     bot: Bot,
-    workflow_data: dict,
     state: FSMContext,
 ) -> None:
     """Зарегистрировать пользователя и показать главный экран."""
@@ -105,11 +104,6 @@ async def start_cmd(
                 text=f"✅ @{safe_name} - подписался на бота",
             )
 
-        await workflow_data["analytics"](
-            user_id=user.id,
-            category_name="/start",
-            command_name="/start" if registration.is_new else "/restart",
-        )
     except Exception:
         await session.rollback()
         logger.exception("Ошибка обработки /start пользователя %s", user.id)
@@ -122,7 +116,6 @@ async def process_user_blocked_bot(
     event: ChatMemberUpdated,
     session: AsyncSession,
     bot: Bot,
-    workflow_data: dict,
 ) -> None:
     """Зафиксировать блокировку бота пользователем."""
     user_id = event.from_user.id
@@ -131,11 +124,6 @@ async def process_user_blocked_bot(
     await bot.send_message(
         chat_id=bot.home_group[0],
         text=f"⛔️ @{safe_name} - заблокировал бота",
-    )
-    await workflow_data["analytics"](
-        user_id=user_id,
-        category_name="/start",
-        command_name="/blocked",
     )
 
 
@@ -146,7 +134,6 @@ async def process_user_unblocked_bot(
     event: ChatMemberUpdated,
     session: AsyncSession,
     bot: Bot,
-    workflow_data: dict,
 ) -> None:
     """Зафиксировать разблокировку бота пользователем."""
     user_id = event.from_user.id
@@ -165,9 +152,4 @@ async def process_user_unblocked_bot(
     await bot.send_message(
         chat_id=bot.home_group[0],
         text=f"♻️ @{safe_name} - разблокировал бота",
-    )
-    await workflow_data["analytics"](
-        user_id=user_id,
-        category_name="/start",
-        command_name="/unblocked",
     )

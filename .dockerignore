@@ -38,8 +38,6 @@ docker-compose.yml
 
 # Database data directories
 database/postgres/
-database/influxdb/
-database/grafana/
 
 # Git
 .git/

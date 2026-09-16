@@ -52,7 +52,6 @@ def keyboard_language() -> InlineKeyboardMarkup:
 async def language_cmd(
     message: Message,
     state: FSMContext,
-    workflow_data: dict,
 ) -> None:
     """Показать настройки языка в рабочем сообщении."""
     await show_command_screen(
@@ -65,11 +64,6 @@ async def language_cmd(
         ),
         reply_markup=keyboard_language(),
     )
-    await workflow_data["analytics"](
-        user_id=message.from_user.id,
-        category_name="/options",
-        command_name="/language",
-    )
 
 
 @other_router.callback_query(F.data.in_({"locale_en", "locale_ru"}))
@@ -77,7 +71,6 @@ async def update_locale_cmd(
     callback: CallbackQuery,
     session: AsyncSession,
     state: FSMContext,
-    workflow_data: dict,
 ) -> None:
     """Сохранить язык и обновить тот же экран."""
     locale = "en" if callback.data == "locale_en" else "ru"
@@ -123,18 +116,12 @@ async def update_locale_cmd(
     except TelegramBadRequest as error:
         if "message is not modified" not in error.message.lower():
             raise
-    await workflow_data["analytics"](
-        user_id=callback.from_user.id,
-        category_name="/options",
-        command_name="/language",
-    )
 
 
 @other_router.message(Command("information"))
 async def information_cmd(
     message: Message,
     session: AsyncSession,
-    workflow_data: dict,
     state: FSMContext,
 ) -> None:
     """Показать справку о боте в рабочем сообщении."""
@@ -175,11 +162,6 @@ async def information_cmd(
             btns=buttons,
             sizes=(1, 1),
         ),
-    )
-    await workflow_data["analytics"](
-        user_id=message.from_user.id,
-        category_name="/info",
-        command_name="/information",
     )
 
 

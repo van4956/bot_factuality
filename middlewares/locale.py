@@ -47,18 +47,12 @@ def get_user_id(event: TelegramObject) -> int | None:
 class LocaleFromDBMiddleware(BaseMiddleware):
     """Загрузить локаль из БД, если её ещё нет в FSM."""
 
-    def __init__(self, workflow_data: dict[str, Any]) -> None:
-        super().__init__()
-        self.workflow_data = workflow_data
-
     async def __call__(
         self,
         handler: Callable[[TelegramObject, dict[str, Any]], Awaitable[Any]],
         event: TelegramObject,
         data: dict[str, Any],
     ) -> Any:
-        data.setdefault("workflow_data", self.workflow_data)
-
         try:
             state = data.get("state")
             state_data = await state.get_data() if state else {}

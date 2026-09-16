@@ -236,12 +236,10 @@ async def start_test_callback(
     callback_query: CallbackQuery,
     state: FSMContext,
     session: AsyncSession,
-    workflow_data: dict,
 ) -> None:
     """Открыть актуальный вопрос теста."""
     user_id = callback_query.from_user.id
     current_question = await orm_get_current_question(session, user_id)
-    analytics = workflow_data['analytics']
 
     if current_question is None:
         user = callback_query.from_user
@@ -295,22 +293,16 @@ async def start_test_callback(
     await state.set_state(TestStates.QUESTION_PROCESS)
     await callback_query.answer()
 
-    await analytics(user_id=user_id,
-                    category_name="/process",
-                    command_name="/start_test")
-
 # Обработчик для inline ответов на вопросы
 @factuality_router.callback_query(StateFilter(TestStates.QUESTION_PROCESS), F.data.startswith('question'))
 async def process_question(
     callback_query: CallbackQuery,
     state: FSMContext,
     session: AsyncSession,
-    workflow_data: dict,
 ) -> None:
     """Проверить и атомарно сохранить выбранный ответ."""
     user_id = callback_query.from_user.id
     data = await state.get_data()
-    analytics = workflow_data['analytics']
     match = re.fullmatch(r"question(\d+)_(\d+)", callback_query.data or "")
     if match is None:
         await callback_query.answer(_("Некорректный ответ."), show_alert=True)
@@ -409,7 +401,6 @@ async def process_question(
                 sizes=(1, 1, 1),
             ),
         )
-        command_name = "/process_test"
         finished = False
     else:
         text = _("Тест завершен!\n\nВаш результат: {correct_count}/13").format(
@@ -426,7 +417,6 @@ async def process_question(
                 sizes=(1, 1, 1),
             ),
         )
-        command_name = "/finish_test"
         finished = True
 
     await state.update_data(
@@ -437,22 +427,14 @@ async def process_question(
     if finished:
         await state.set_state(None)
     await callback_query.answer()
-    await analytics(
-        user_id=user_id,
-        category_name="/process",
-        command_name=command_name,
-    )
 
 # Обработчик нажатия на инлайн-кнопку "О книге"
 @factuality_router.callback_query(F.data == 'about_book')
 async def about_book(
     callback_query: CallbackQuery,
     state: FSMContext,
-    workflow_data: dict,
 ) -> None:
     """Показать информацию о книге."""
-    user_id = callback_query.from_user.id
-
     text = _("📖 О книге «Фактологичность»\n\n"
             "Ханс Рослинг, профессор международного здравоохранения, провёл тесты среди тысяч людей по всему миру: "
             "студентов, политиков, учёных и даже нобелевских лауреатов.\n\n"
@@ -470,11 +452,6 @@ async def about_book(
     await state.update_data(last_message_id=new_message.message_id)
     await callback_query.answer()
 
-    analytics = workflow_data['analytics']
-    await analytics(user_id=user_id,
-                    category_name="/info",
-                    command_name="/about_book")
-
 
 # Обработчик нажатия на инлайн-кнопку "О тесте"
 @factuality_router.callback_query(F.data == 'about_test')
@@ -482,11 +459,8 @@ async def about_test(
     callback_query: CallbackQuery,
     state: FSMContext,
     session: AsyncSession,
-    workflow_data: dict,
 ) -> None:
     """Показать описание и агрегированную статистику теста."""
-    user_id = callback_query.from_user.id
-
     # получаем все result юзеров
     cnt_res, avg_result = await orm_get_result_statistics(session)
 
@@ -510,8 +484,3 @@ async def about_test(
                                        sizes=(1,1))) # type: ignore
     await state.update_data(last_message_id=new_message.message_id)
     await callback_query.answer()
-
-    analytics = workflow_data['analytics']
-    await analytics(user_id=user_id,
-                    category_name="/info",
-                    command_name="/about_test")

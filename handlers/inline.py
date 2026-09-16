@@ -22,7 +22,8 @@ inline_router = Router()
 7. Установите placeholder text (текст, который будет отображаться в поле ввода)"""
 
 @inline_router.inline_query()
-async def handle_inline_query(inline_query: InlineQuery, workflow_data: dict):
+async def handle_inline_query(inline_query: InlineQuery) -> None:
+    """Вернуть карточку бота в инлайн-режиме."""
     # Создаем результат инлайн-запроса
     results: Sequence[InlineQueryResultArticle] = [
         InlineQueryResultArticle(
@@ -39,9 +40,3 @@ async def handle_inline_query(inline_query: InlineQuery, workflow_data: dict):
     ]
     # Отправляем результаты
     await inline_query.answer(results, cache_time=300) # type: ignore
-
-    user_id = inline_query.from_user.id
-    analytics = workflow_data['analytics']
-    await analytics(user_id=user_id,
-                category_name="/start",
-                command_name="/inline")
